@@ -41,7 +41,6 @@ coverage/
 
 # Firebase Configuration (Sensitive Data)
 src/firebase.js
-.firebase/
 firebase.json
 .firebaserc
 
