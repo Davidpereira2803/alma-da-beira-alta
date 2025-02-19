@@ -5,12 +5,12 @@ import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebas
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+      setUser(user);
       setLoading(false);
     });
 
@@ -18,24 +18,15 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    try {
-      return await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.error("Login failed:", error.message);
-      return { error: error.message };
-    }
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-    }
+    await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );

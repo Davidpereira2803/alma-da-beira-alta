@@ -51,7 +51,7 @@ function Home() {
               <p className="lead">
                 Alma da Beira Alta ASBL, based in Vichten, Luxembourg, is a cultural association dedicated to preserving and promoting Portuguese folklore and traditions. Established to foster cultural exchange and community engagement, the association organizes various events and activities that celebrate the rich heritage of the Beira Alta region in Portugal. Through music, dance, and other cultural expressions, Alma da Beira Alta ASBL serves as a vibrant hub for cultural enrichment and community connection.
               </p>
-              <p className="lead">
+              <div>
                 The association is led by a team of dedicated individuals, including:
                 <ul className="list-unstyled text-start mt-3">
                   <li><strong>President:</strong> <span className="text-secondary">Daisy F. Pereira</span></li>
@@ -59,7 +59,7 @@ function Home() {
                   <li><strong>Secretary:</strong> <span className="text-secondary">Ana I. Esteves</span></li>
                   <li><strong>Treasurer:</strong> <span className="text-secondary">Jessica Pereira Braz</span></li>
                 </ul>
-              </p>
+              </div>
             </Col>
           </Row>
         </Container>
