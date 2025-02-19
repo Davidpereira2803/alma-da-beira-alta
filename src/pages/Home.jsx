@@ -49,7 +49,16 @@ function Home() {
             <Col md={8}>
               <h2 className="fw-bold">Who are we?</h2>
               <p className="lead">
-                Alma da Beira Alta is a cultural association dedicated to preserving and promoting Portuguese folklore and traditions in Luxembourg. Founded by a group of passionate individuals, the association organizes various events, workshops, and performances to showcase the rich cultural heritage of Portugal. Through music, dance, and traditional crafts, Alma da Beira Alta aims to foster a sense of community and cultural pride among Portuguese immigrants and the broader Luxembourgish society. The association also collaborates with other cultural organizations to create a vibrant and diverse cultural landscape in Luxembourg.
+                Alma da Beira Alta ASBL, based in Vichten, Luxembourg, is a cultural association dedicated to preserving and promoting Portuguese folklore and traditions. Established to foster cultural exchange and community engagement, the association organizes various events and activities that celebrate the rich heritage of the Beira Alta region in Portugal. Through music, dance, and other cultural expressions, Alma da Beira Alta ASBL serves as a vibrant hub for cultural enrichment and community connection.
+              </p>
+              <p className="lead">
+                The association is led by a team of dedicated individuals, including:
+                <ul className="list-unstyled text-start mt-3">
+                  <li><strong>President:</strong> <span className="text-secondary">Daisy F. Pereira</span></li>
+                  <li><strong>Vice President:</strong> <span className="text-secondary">S. Monteiro Da Silva</span></li>
+                  <li><strong>Secretary:</strong> <span className="text-secondary">Ana I. Esteves</span></li>
+                  <li><strong>Treasurer:</strong> <span className="text-secondary">Jessica Pereira Braz</span></li>
+                </ul>
               </p>
             </Col>
           </Row>
@@ -103,21 +112,32 @@ function Home() {
         <Container className="my-5 bg-dark text-white p-4 rounded shadow">
           <Row className="justify-content-center text-center">
             <Col md={8}>
+              <h3 className="fw-bold">Join Us</h3>
+              <p>Interested in becoming a member of Alma da Beira Alta ASBL? Contact us for more information on how to join and participate in our cultural activities.</p>
+            </Col>
+          </Row>
+        </Container>
+      </Container>
+
+      <Container className="text-center">
+        <Container className="my-5 bg-dark text-white p-4 rounded shadow">
+          <Row className="justify-content-center text-center">
+            <Col md={8}>
               <h3 className="fw-bold">Contact Us</h3>
               <p><FaEnvelope className="me-2" /> Email: <a href="mailto:info@almadabeiraalta.com">info@almadabeiraalta.com</a></p>
               <p><FaPhone className="me-2" /> Phone: +352 123 456 789</p>
               <p>Follow us on social media:</p>
               <div className="d-flex justify-content-center gap-3">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/people/Alma-da-Beira-Alta-asbl/61567258730734/" target="_blank" rel="noopener noreferrer">
                   <FaFacebook size={30} className="text-secondary" />
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/almadabeiraalta/" target="_blank" rel="noopener noreferrer">
                   <FaInstagram size={30} className="text-secondary" />
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                <a href="" target="_blank" rel="noopener noreferrer">
                   <FaYoutube size={30} className="text-secondary" />
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                <a href="" target="_blank" rel="noopener noreferrer">
                   <FaTiktok size={30} className="text-secondary" />
                 </a>
               </div>
