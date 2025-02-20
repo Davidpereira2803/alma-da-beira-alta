@@ -39,7 +39,7 @@ function AdminMembers() {
 
   return (
     <Container className="mt-5">
-      <h2 className="text-center">Member Registrations</h2>
+      <h2 className="text-center">Registered Members</h2>
       <Table striped bordered hover className="mt-3">
         <thead>
           <tr>
@@ -60,11 +60,11 @@ function AdminMembers() {
               <td>{member.phone}</td>
               <td>{member.address}</td>
               <td>{member.message}</td>
-              <td>{member.processed ? "✅ Processed" : "❌ Pending"}</td>
+              <td>{member.processed ? "✅ Payed" : "❌ Payement Pending"}</td>
               <td>
                 {!member.processed && (
                   <Button variant="success" size="sm" onClick={() => handleMarkProcessed(member.id)}>
-                    Mark as Processed
+                    Mark as Payed
                   </Button>
                 )}
                 <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDelete(member.id)}>
@@ -77,6 +77,7 @@ function AdminMembers() {
       </Table>
       <Button variant="secondary" className="w-100 mt-3" href="/admin">Back to Admin Panel</Button>
     </Container>
+
   );
 }
 
