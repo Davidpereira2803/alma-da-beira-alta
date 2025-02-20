@@ -27,7 +27,6 @@ function RegisterMember() {
       // Save data to Firestore
       await addDoc(collection(db, "registrations"), formData);
 
-      // Send email with EmailJS
       await emailjs.send(
         "service_qsmqp31", // Replace with your EmailJS Service ID
         "template_ignuqdg", // Replace with your EmailJS Template ID

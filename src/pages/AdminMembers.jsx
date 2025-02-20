@@ -75,6 +75,7 @@ function AdminMembers() {
           ))}
         </tbody>
       </Table>
+      <Button variant="secondary" className="w-100 mt-3" href="/admin">Back to Admin Panel</Button>
     </Container>
   );
 }

@@ -12,6 +12,7 @@ import AdminEvents from "./pages/AdminEvents";
 import AdminGallery from "./pages/AdminGallery";
 import RegisterMember from "./pages/RegisterMember";
 import AdminMembers from "./pages/AdminMembers";
+import AdminRegistrations from "./pages/AdminRegistrations";
 import { Link } from "react-router-dom";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/register" element={<RegisterMember />} />
             <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} />
+            <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} /> {/* Optional for admin to view registrations */}
             <Route path="/login" element={<Login />} />
 
             {/* Protected Admin Routes */}
