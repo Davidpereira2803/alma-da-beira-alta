@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { Container, Form, Button } from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 
@@ -19,45 +19,43 @@ function RegisterMember() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+      setError("All fields are required!");
+      return;
+    }
   
     try {
-      // Save data to Firestore
-      await addDoc(collection(db, "registrations"), formData);
-
-      await emailjs.send(
-        "service_qsmqp31", // Replace with your EmailJS Service ID
-        "template_ignuqdg", // Replace with your EmailJS Template ID
-        {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          message: formData.message,
-        },
-        "LEBUL4PrsR_E_xCsB" // Replace with your EmailJS Public Key
+      const membersRef = collection(db, "members");
+  
+      // Query Firestore to check if email or phone already exists
+      const q = query(
+        membersRef,
+        where("email", "==", formData.email),
+        where("phone", "==", formData.phone)
       );
-
-      setSuccess(true);
-      setError("");
-      alert("Registration successful! Confirmation email sent.");
-      
-      // Reset the form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        message: "",
-      });
-
+  
+      const querySnapshot = await getDocs(q);
+  
+      if (!querySnapshot.empty) {
+        setError("A member with this email or phone number already exists!");
+        return;
+      }
+  
+      // If no duplicate, proceed with registration
+      await addDoc(membersRef, formData);
+  
+      setSuccess("Registration successful!");
+      setFormData({ name: "", email: "", phone: "", address: "", message: "" });
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error submitting form:", error);
       setError("Error submitting form. Please try again.");
     }
   };
+  
 
   return (
     <Container className="mt-5">
