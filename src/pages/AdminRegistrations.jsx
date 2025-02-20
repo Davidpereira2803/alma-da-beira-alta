@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { collection, getDocs, deleteDoc, addDoc, doc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, addDoc, doc , query, orderBy, limit} from "firebase/firestore";
 import { Container, Table, Button } from "react-bootstrap";
 
 function AdminRegistrations() {
@@ -19,14 +19,33 @@ function AdminRegistrations() {
     fetchRegistrations();
   }, []);
 
+  const generateMembershipNumber = async () => {
+    // Fetch the last membership number and increment it
+    const membersRef = collection(db, "members");
+    const lastMemberQuery = query(membersRef, orderBy("membershipNumber", "desc"), limit(1));
+    
+    const snapshot = await getDocs(lastMemberQuery);
+    let newMembershipNumber = 1; // Start at 1 if no members exist
+    
+    if (!snapshot.empty) {
+      const lastMember = snapshot.docs[0].data();
+      newMembershipNumber = lastMember.membershipNumber + 1;
+    }
+
+    return newMembershipNumber;
+  };
+
   // Approve a Registration (Move to Members Collection)
   const approveMember = async (registration) => {
     try {
+      const membershipNumber = await generateMembershipNumber();
+
       await addDoc(collection(db, "members"), {
         name: registration.name,
         email: registration.email,
         phone: registration.phone,
         address: registration.address,
+        membershipNumber: membershipNumber,
         timestamp: new Date(),
       });
 
@@ -82,6 +101,7 @@ function AdminRegistrations() {
           ))}
         </tbody>
       </Table>
+      <Button variant="secondary" className="w-100 mt-3" href="/admin/register">Register Member</Button>
       <Button variant="secondary" className="w-100 mt-3" href="/admin">Back to Admin Panel</Button>
     </Container>
   );

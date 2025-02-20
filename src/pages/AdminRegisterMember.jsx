@@ -2,9 +2,8 @@ import { useState } from "react";
 import { db } from "../firebase";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { Container, Form, Button } from "react-bootstrap";
-import emailjs from "@emailjs/browser";
 
-function RegisterMember() {
+function AdminRegisterMember() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,22 +43,7 @@ function RegisterMember() {
         return;
       }
   
-      // If no duplicate, proceed with registration
       await addDoc(membersRef, formData);
-
-      // ✅ Send confirmation email via EmailJS
-      const templateParams = {
-        name: formData.name,
-        email: formData.email, // Member's email
-        message: `Hello ${formData.name},\n\nThank you for your registration request at Alma Da Beira Alta. We will review your information and contact you soon.\n\nBest regards,\nAlma Da Beira Alta Team`
-      };
-
-      await emailjs.send(
-        "service_qsmqp31",  // 🔹 Replace with your EmailJS Service ID
-        "template_ignuqdg",  // 🔹 Replace with your EmailJS Template ID
-        templateParams,
-        "LEBUL4PrsR_E_xCsB"    // 🔹 Replace with your EmailJS Public Key
-      );
 
       setSuccess("Registration successful! A confirmation email has been sent.");
       setFormData({ name: "", email: "", phone: "", address: "", message: "" });
@@ -71,10 +55,10 @@ function RegisterMember() {
 
   return (
     <Container className="mt-5">
-      <h2 className="text-center">Become a Member</h2>
-      <p className="text-center">Fill out the form below, and we will contact you!</p>
+      <h2 className="text-center">Register a Member</h2>
+      <p className="text-center">Fill out the form below!</p>
 
-      {success && <p className="alert alert-success">Your request has been submitted!</p>}
+      {success && <p className="alert alert-success">Successfully Registered!</p>}
       {error && <p className="alert alert-danger">{error}</p>}
 
       <Form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow">
@@ -105,8 +89,9 @@ function RegisterMember() {
 
         <Button variant="primary" type="submit">Submit</Button>
       </Form>
+      <Button variant="secondary" className="w-100 mt-3" href="/admin/registrations">Back to Registration Panel</Button>
     </Container>
   );
 }
 
-export default RegisterMember;
+export default AdminRegisterMember;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Container, Card, Row, Col } from "react-bootstrap";
+import { Container, Card, Row, Col, Button } from "react-bootstrap";
 
 function Events() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -44,6 +44,18 @@ function Events() {
                     <strong>Location:</strong> {event.location}
                   </Card.Text>
                   <Card.Text>{event.description}</Card.Text>
+
+                  {/* ✅ PDF Brochure Button (Only if available) */}
+                  {event.pdfUrl && (
+                    <Button 
+                      variant="info" 
+                      href={event.pdfUrl} 
+                      target="_blank" 
+                      className="mt-2"
+                    >
+                      📄 View Brochure
+                    </Button>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -67,6 +79,18 @@ function Events() {
                     <strong>Location:</strong> {event.location}
                   </Card.Text>
                   <Card.Text>{event.description}</Card.Text>
+
+                  {/* ✅ PDF Brochure Button (Only if available) */}
+                  {event.pdfUrl && (
+                    <Button 
+                      variant="info" 
+                      href={event.pdfUrl} 
+                      target="_blank" 
+                      className="mt-2"
+                    >
+                      📄 Download Brochure
+                    </Button>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -75,7 +99,6 @@ function Events() {
       )}
     </Container>
   );
-  
 }
 
 export default Events;

@@ -76,6 +76,16 @@ function Home() {
                   <p><strong>Date:</strong> {nearestEvent.date}</p>
                   <p><strong>Location:</strong> {nearestEvent.location}</p>
                   <p>{nearestEvent.description}</p>
+                  <p>{nearestEvent.pdfUrl && (
+                    <Button 
+                      variant="info" 
+                      href={nearestEvent.pdfUrl} 
+                      target="_blank" 
+                      className="mt-2"
+                    >
+                      📄 View Brochure
+                    </Button>
+                  )}</p>
                   <Link to="/events">
                     <Button variant="secondary" className="me-2">View All Events</Button>
                   </Link>
