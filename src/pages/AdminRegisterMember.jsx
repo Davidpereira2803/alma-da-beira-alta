@@ -2,10 +2,9 @@ import { useState } from "react";
 import { db } from "../firebase";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { Container, Form, Button } from "react-bootstrap";
-import emailjs from "@emailjs/browser";
 import { useTranslation } from "react-i18next";
 
-function RegisterMember() {
+function AdminRegisterMember() {
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
@@ -22,47 +21,32 @@ function RegisterMember() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
       setError(t("all_fields_required"));
       return;
     }
-
+  
     try {
       const membersRef = collection(db, "registrations");
-
+  
       // Query for email
       const emailQuery = query(membersRef, where("email", "==", formData.email));
       const emailSnapshot = await getDocs(emailQuery);
-
+  
       // Query for phone
       const phoneQuery = query(membersRef, where("phone", "==", formData.phone));
       const phoneSnapshot = await getDocs(phoneQuery);
-
+  
       if (!emailSnapshot.empty || !phoneSnapshot.empty) {
         setError(t("member_already_exists"));
         return;
       }
-
-      // If no duplicate, proceed with registration
+  
       await addDoc(membersRef, formData);
-
-      // ✅ Send confirmation email via EmailJS
-      const templateParams = {
-        name: formData.name,
-        email: formData.email, // Member's email
-        message: t("email_confirmation_message", { name: formData.name }),
-      };
-
-      await emailjs.send(
-        "service_qsmqp31", // 🔹 Replace with your EmailJS Service ID
-        "template_ignuqdg", // 🔹 Replace with your EmailJS Template ID
-        templateParams,
-        "LEBUL4PrsR_E_xCsB" // 🔹 Replace with your EmailJS Public Key
-      );
 
       setSuccess(t("registration_successful"));
       setFormData({ name: "", email: "", phone: "", address: "", message: "" });
@@ -108,8 +92,11 @@ function RegisterMember() {
 
         <Button variant="primary" type="submit">{t("submit")}</Button>
       </Form>
+      <Button variant="secondary" className="w-100 mt-3" href="/admin/registrations">
+        {t("back_to_registration_panel")}
+      </Button>
     </Container>
   );
 }
 
-export default RegisterMember;
+export default AdminRegisterMember;
