@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Admin from "./pages/Admin";
 import AdminEvents from "./pages/AdminEvents";
 import AdminGallery from "./pages/AdminGallery";
+import RegisterMember from "./pages/RegisterMember";
+import AdminMembers from "./pages/AdminMembers";
 import { Link } from "react-router-dom";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/register" element={<RegisterMember />} />
+            <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
 
             {/* Protected Admin Routes */}

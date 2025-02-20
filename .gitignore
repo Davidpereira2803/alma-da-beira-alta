@@ -41,6 +41,8 @@ coverage/
 
 # Firebase Configuration (Sensitive Data)
 src/firebase.js
+firebase.json
+.firebaserc
 
 # Environment Variables (Secret Keys)
 .env

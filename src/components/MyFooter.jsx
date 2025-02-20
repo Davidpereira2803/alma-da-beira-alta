@@ -19,11 +19,9 @@ function MyFooter() {
         )}
 
         {/* Always show "Admin Login" button if the user is NOT logged in */}
-        {!user && (
           <Link to="/login">
-            <Button variant="secondary" className="mt-2">Admin Login</Button>
+            <Button variant="dark" className="mt-2">Admin Login</Button>
           </Link>
-        )}
       </Container>
     </footer>
   );

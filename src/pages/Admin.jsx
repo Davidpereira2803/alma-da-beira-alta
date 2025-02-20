@@ -23,6 +23,12 @@ function Admin() {
         <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/gallery")}>
           Manage Gallery
         </Button>
+        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/members")}>
+          Manage Members
+        </Button>
+        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/registrations")}>
+          Manage Registrations
+        </Button>
 
         <Button variant="danger" className="w-100 mt-3" onClick={handleLogout}>
           Logout
