@@ -77,7 +77,7 @@ function Home() {
                   <p><strong>Location:</strong> {nearestEvent.location}</p>
                   <p>{nearestEvent.description}</p>
                   <Link to="/events">
-                    <Button variant="dark" className="me-2">View All Events</Button>
+                    <Button variant="secondary" className="me-2">View All Events</Button>
                   </Link>
                 </div>
               ) : (
@@ -101,7 +101,7 @@ function Home() {
                 <p>No images available at the moment.</p>
               )}
               <Link to="/gallery">
-                <Button variant="dark" className="mt-3">View Full Gallery</Button>
+                <Button variant="secondary" className="mt-3">View Full Gallery</Button>
               </Link>
             </Col>
           </Row>
@@ -114,6 +114,9 @@ function Home() {
             <Col md={8}>
               <h3 className="fw-bold">Join Us</h3>
               <p>Interested in becoming a member of Alma da Beira Alta ASBL? Contact us for more information on how to join and participate in our cultural activities.</p>
+              <Link to="/register">
+                <Button variant="secondary" className="mt-3">Register Now</Button>
+              </Link>
             </Col>
           </Row>
         </Container>
