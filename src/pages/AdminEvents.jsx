@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { Container, Table, Button, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 function AdminEvents() {
+  const { t, i18n } = useTranslation();
   const [events, setEvents] = useState([]);
   const [newEvent, setNewEvent] = useState({ title: "", date: "", description: "", pdfUrl: "" });
 
@@ -54,13 +56,13 @@ function AdminEvents() {
 
   return (
     <Container className="mt-5">
-      <h2 className="text-center">Manage Events</h2>
+      <h2 className="text-center">{t("manage_events")}</h2>
 
       {/* ✅ Add Event Form */}
       <Form onSubmit={handleAddEvent} className="mb-4 p-3 bg-light rounded shadow">
-        <h4>Add Event</h4>
+        <h4>{t("add_event")}</h4>
         <Form.Group className="mb-2">
-          <Form.Label>Title</Form.Label>
+          <Form.Label>{t("event_title")}</Form.Label>
           <Form.Control 
             type="text" 
             value={newEvent.title} 
@@ -70,7 +72,7 @@ function AdminEvents() {
         </Form.Group>
 
         <Form.Group className="mb-2">
-          <Form.Label>Date</Form.Label>
+          <Form.Label>{t("event_date")}</Form.Label>
           <Form.Control 
             type="date" 
             value={newEvent.date} 
@@ -80,7 +82,7 @@ function AdminEvents() {
         </Form.Group>
 
         <Form.Group className="mb-2">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>{t("event_description")}</Form.Label>
           <Form.Control 
             as="textarea" 
             rows={3} 
@@ -92,27 +94,26 @@ function AdminEvents() {
 
         {/* ✅ GitHub PDF URL Input */}
         <Form.Group className="mb-2">
-          <Form.Label>PDF Brochure URL (GitHub Link)</Form.Label>
+          <Form.Label>{t("event_pdf_url")}</Form.Label>
           <Form.Control 
             type="url" 
             value={newEvent.pdfUrl} 
             onChange={(e) => setNewEvent({ ...newEvent, pdfUrl: e.target.value })} 
-            placeholder="Paste the GitHub link to your PDF"
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">Add Event</Button>
+        <Button variant="primary" type="submit">{t("add_event")}</Button>
       </Form>
 
       {/* ✅ Events Table */}
       <Table striped bordered hover className="mt-3">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Brochure</th>
-            <th>Actions</th>
+            <th>{t("event_title")}</th>
+            <th>{t("event_date")}</th>
+            <th>{t("event_description")}</th>
+            <th>{t("event_pdf_brochure")}</th>
+            <th>{t("actions")}</th>
           </tr>
         </thead>
         <tbody>
@@ -123,14 +124,14 @@ function AdminEvents() {
               <td>{event.description}</td>
               <td>
                 {event.pdfUrl ? (
-                  <a href={event.pdfUrl} target="_blank" rel="noopener noreferrer">View PDF</a>
+                  <a href={event.pdfUrl} target="_blank" rel="noopener noreferrer">{t("view_pdf")}</a>
                 ) : (
                   "No PDF"
                 )}
               </td>
               <td>
                 <Button variant="danger" size="sm" onClick={() => deleteDoc(doc(db, "events", event.id))}>
-                  Delete
+                {t("delete")}
                 </Button>
               </td>
             </tr>
@@ -138,7 +139,7 @@ function AdminEvents() {
         </tbody>
       </Table>
 
-      <Button variant="secondary" className="w-100 mt-3" href="/admin">Back to Admin Panel</Button>
+      <Button variant="secondary" className="w-100 mt-3" href="/admin">{t("back_to_admin_panel")}</Button>
     </Container>
   );
 }

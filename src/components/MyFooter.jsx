@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 function MyFooter() {
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const adminEmail = "admin@example.com";
 
@@ -20,7 +22,7 @@ function MyFooter() {
 
         {/* Always show "Admin Login" button if the user is NOT logged in */}
           <Link to="/login">
-            <Button variant="dark" className="mt-2">Admin Login</Button>
+            <Button variant="dark" className="mt-2">{t("admin_login")}</Button>
           </Link>
       </Container>
     </footer>
