@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import { useTranslation } from "react-i18next";
 
@@ -6,43 +6,34 @@ function MyNavbar() {
   const { t, i18n } = useTranslation();
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" style={{ height: "80px", padding: "10px 20px" }}>
-      <Container>
+    <nav className="bg-gray-900 text-white py-4 shadow-md">
+      <div className="container mx-auto flex justify-between items-center px-4">
         {/* Logo & Title */}
-        <Navbar.Brand href="/" className="fw-bold fs-3 d-flex align-items-center">
-          <img
-            src={logo}
-            alt="Logo"
-            width="71"
-            height="50"
-            className="d-inline-block align-top me-2"
-          />
+        <Link to="/" className="flex items-center text-2xl font-bold">
+          <img src={logo} alt="Logo" className="w-16 h-12 mr-3" />
           {t("title")}
-        </Navbar.Brand>
+        </Link>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link href="/gallery" className="fs-5 px-3">{t("gallery")}</Nav.Link>
-            <Nav.Link href="/events" className="fs-5 px-3">{t("events")}</Nav.Link>
-            <Nav.Link href="/register" className="fs-5 px-3">{t("register")}</Nav.Link>
-          </Nav>
+        {/* Navigation Links */}
+        <div className="hidden md:flex space-x-6">
+          <Link to="/gallery" className="text-lg hover:text-gray-300">{t("gallery")}</Link>
+          <Link to="/events" className="text-lg hover:text-gray-300">{t("events")}</Link>
+          <Link to="/register" className="text-lg hover:text-gray-300">{t("register")}</Link>
+        </div>
 
-          {/* Language Selector */}
-          <Form.Select
-            className="ms-3 w-auto"
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-            value={i18n.language}
-          >
-            <option value="en">🇬🇧</option>
-            <option value="fr">🇫🇷</option>
-            <option value="pt">🇵🇹</option>
-            <option value="de">🇩🇪</option>
-          </Form.Select>
-
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        {/* Language Selector */}
+        <select
+          className="bg-gray-800 text-white px-3 py-2 rounded-md focus:outline-none"
+          onChange={(e) => i18n.changeLanguage(e.target.value)}
+          value={i18n.language}
+        >
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+          <option value="pt">PT</option>
+          <option value="de">DE</option>
+        </select>
+      </div>
+    </nav>
   );
 }
 
