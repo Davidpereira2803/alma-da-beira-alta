@@ -43,7 +43,7 @@ function AdminEvents() {
     const formattedBackgroundImage = convertToRawGitHubLink(newEvent.backgroundImage);
 
     try {
-      const docRef = await addDoc(collection(db, "events"), { ...newEvent, pdfUrl: formattedPdfUrl, backgroundImage: formattedBackground});
+      const docRef = await addDoc(collection(db, "events"), { ...newEvent, pdfUrl: formattedPdfUrl, backgroundImage: formattedBackgroundImage});
       setEvents([...events, { id: docRef.id, ...newEvent, pdfUrl: formattedPdfUrl, backgroundImage: formattedBackgroundImage }]);
       setNewEvent({ title: "", date: "", description: "", pdfUrl: "", backgroundImage: "" });
 
