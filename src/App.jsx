@@ -21,7 +21,7 @@ function App() {
         {/* Navbar */}
         <MyNavbar />
 
-        <main className="flex-grow container mx-auto my-4">
+          <main className="w-full flex flex-grow mx-auto my-4">
           {/* Page Routes */}
           <Routes>
             <Route path="/" element={<Home />} />

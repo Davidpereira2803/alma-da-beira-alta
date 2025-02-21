@@ -6,7 +6,7 @@ function MyNavbar() {
   const { t, i18n } = useTranslation();
 
   return (
-    <nav className="bg-gray-900 text-white py-4 shadow-md">
+    <nav className="bg-stone-900 text-white py-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* Logo & Title */}
         <Link to="/" className="flex items-center text-2xl font-bold">
@@ -23,7 +23,7 @@ function MyNavbar() {
 
         {/* Language Selector */}
         <select
-          className="bg-gray-800 text-white px-3 py-2 rounded-md focus:outline-none"
+          className="bg-stone-800 text-white px-3 py-2 rounded-md focus:outline-none"
           onChange={(e) => i18n.changeLanguage(e.target.value)}
           value={i18n.language}
         >

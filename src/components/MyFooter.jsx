@@ -8,7 +8,7 @@ function MyFooter() {
   const adminEmail = "admin@example.com";
 
   return (
-    <footer className="bg-gray-900 text-white text-center py-4 mt-auto">
+    <footer className="bg-stone-900 text-white text-center py-4 mt-auto">
       <div className="container mx-auto">
         <p>© {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg</p>
 
@@ -23,7 +23,7 @@ function MyFooter() {
 
         {/* Always show "Admin Login" button if the user is NOT logged in */}
         <Link to="/login">
-          <button className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg mt-2 ml-3">
+          <button className="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-lg mt-2 ml-3 text-xs">
             {t("admin_login")}
           </button>
         </Link>
