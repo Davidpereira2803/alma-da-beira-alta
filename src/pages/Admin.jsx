@@ -13,7 +13,7 @@ function Admin() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 p-6">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("admin_panel")}</h2>
 
@@ -50,6 +50,17 @@ function Admin() {
           onClick={handleLogout}
         >
           {t("admin_logout")}
+        </button>
+      </div>
+
+      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center my-5">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("finance_panel")}</h2>
+
+        <button
+          className="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-900 transition duration-300 mb-2"
+          onClick={() => navigate("/admin/finance")}
+        >
+          {t("finances")}
         </button>
       </div>
     </div>
