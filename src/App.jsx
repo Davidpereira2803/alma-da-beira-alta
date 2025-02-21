@@ -14,6 +14,7 @@ import AdminMembers from "./pages/AdminMembers";
 import AdminRegistrations from "./pages/AdminRegistrations";
 import AdminRegisterMember from "./pages/AdminRegisterMember";
 import ForgotPassword from "./pages/ForgotPassword";
+import AdminFinancePanel from "./pages/AdminFinancePanel";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/admin/register" element={<ProtectedRoute><AdminRegisterMember /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
 
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />

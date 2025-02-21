@@ -96,5 +96,17 @@
   "forgot_password": "Mot de passe oublié?",
   "send_reset_email": "Envoyer l'email de réinitialisation",
   "password_reset_email_sent": "E-mail de réinitialisation envoyé ! Vérifiez votre boîte de réception.",
-  "password_reset_failed": "Échec de l'envoi de l'e-mail de réinitialisation. Essayez encore."
+  "password_reset_failed": "Échec de l'envoi de l'e-mail de réinitialisation. Essayez encore.",
+  "finance_panel": "Panneau financier",
+  "finances": "Finances",
+  "total_income": "Revenu total",
+  "total_expenses": "Dépenses totales",
+  "balance": "Solde",
+  "date": "Date",
+  "description": "Description",
+  "amount": "Montant",
+  "type": "Type",
+  "income": "Revenu",
+  "expense": "Dépense",
+  "add_transaction": "Ajouter une transaction"
 }

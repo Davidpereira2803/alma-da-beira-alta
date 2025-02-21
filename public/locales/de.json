@@ -96,5 +96,17 @@
     "forgot_password": "Passwort vergessen?",
     "send_reset_email": "Passwort-Reset-E-Mail senden",
     "password_reset_email_sent": "Passwort-Reset-E-Mail gesendet! Überprüfe dein Postfach.",
-    "password_reset_failed": "Fehler beim Senden der Passwort-Reset-E-Mail. Versuche es erneut."
+    "password_reset_failed": "Fehler beim Senden der Passwort-Reset-E-Mail. Versuche es erneut.",
+    "finance_panel": "Finanzübersicht",
+    "finances": "Finanzen",
+    "total_income": "Gesamteinnahmen",
+    "total_expenses": "Gesamtausgaben",
+    "balance": "Kontostand",
+    "date": "Datum",
+    "description": "Beschreibung",
+    "amount": "Betrag",
+    "type": "Typ",
+    "income": "Einnahme",
+    "expense": "Ausgabe",
+    "add_transaction": "Transaktion hinzufügen"
 }

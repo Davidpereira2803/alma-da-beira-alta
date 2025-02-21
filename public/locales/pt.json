@@ -96,5 +96,17 @@
     "forgot_password": "Esqueceu a senha?",
     "send_reset_email": "Enviar e-mail de redefinição",
     "password_reset_email_sent": "E-mail de redefinição enviado! Verifique sua caixa de entrada.",
-    "password_reset_failed": "Falha ao enviar e-mail de redefinição. Tente novamente."
+    "password_reset_failed": "Falha ao enviar e-mail de redefinição. Tente novamente.",
+    "finance_panel": "Painel Financeiro",
+    "finances": "Finanças",
+    "total_income": "Receita Total",
+    "total_expenses": "Despesas Totais",
+    "balance": "Saldo",
+    "date": "Data",
+    "description": "Descrição",
+    "amount": "Valor",
+    "type": "Tipo",
+    "income": "Receita",
+    "expense": "Despesa",
+    "add_transaction": "Adicionar Transação"
 }
