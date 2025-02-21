@@ -46,7 +46,7 @@ function Home() {
     <>
     <div className="max-w-7xl mx-auto px-4">
       {/* Who We Are Section */}
-      <div className="flex justify-center items-center px-4">
+      <div className="flex justify-center items-center px-4 my-5">
         <div className="bg-stone-900 text-white py-5 rounded-lg w-4/5 text-center">
           <h2 className="text-2xl font-bold my-3">{t("who_we_are")}</h2>
           <p className="text-lg mt-3 w-1/2 mx-auto text-center">{t("who_we_are_text")}</p>
