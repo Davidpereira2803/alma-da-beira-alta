@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
 import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
 import Home from "./pages/Home";
@@ -14,16 +13,15 @@ import RegisterMember from "./pages/RegisterMember";
 import AdminMembers from "./pages/AdminMembers";
 import AdminRegistrations from "./pages/AdminRegistrations";
 import AdminRegisterMember from "./pages/AdminRegisterMember";
-import { Link } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <div className="d-flex flex-column min-vh-100">
+      <div className="w-full flex flex-col min-h-screen bg-gray-100">
         {/* Navbar */}
         <MyNavbar />
 
-        <main className="flex-grow-1 container my-4">
+          <main>
           {/* Page Routes */}
           <Routes>
             <Route path="/" element={<Home />} />
@@ -37,18 +35,8 @@ function App() {
 
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-            <Route path="/admin/events" element={<ProtectedRoute>
-              <Container>
-                <AdminEvents />
-                
-              </Container>
-            </ProtectedRoute>} />
-            <Route path="/admin/gallery" element={<ProtectedRoute>
-              <Container>
-                <AdminGallery />
-                
-              </Container>
-            </ProtectedRoute>} />
+            <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
+            <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
           </Routes>
         </main>
 

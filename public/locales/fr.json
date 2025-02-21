@@ -25,6 +25,7 @@
   "event_description": "Description",
   "event_pdf_url": "URL de la brochure PDF (Lien GitHub)",
   "event_pdf_brochure": "Brochure PDF",
+  "event_background_image_url": "Image d'arrière-plan URL",
   "actions": "Actions",
   "view_pdf": "Voir le PDF",
   "delete": "Supprimer",

@@ -1,10 +1,9 @@
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Container, Button, Card } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function Admin() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -14,29 +13,46 @@ function Admin() {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-      <Card className="p-4 shadow-lg text-center" style={{ maxWidth: "400px", width: "100%" }}>
-        <h2 className="fw-bold mb-4">{t("admin_panel")}</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("admin_panel")}</h2>
 
-        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/events")}>
+        <button
+          className="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-900 transition duration-300 mb-2"
+          onClick={() => navigate("/admin/events")}
+        >
           {t("manage_events")}
-        </Button>
+        </button>
 
-        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/gallery")}>
+        <button
+          className="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-900 transition duration-300 mb-2"
+          onClick={() => navigate("/admin/gallery")}
+        >
           {t("manage_gallery")}
-        </Button>
-        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/members")}>
-          {t("manage_members")}
-        </Button>
-        <Button variant="dark" className="w-100 mb-2" onClick={() => navigate("/admin/registrations")}>
-          {t("manage_registrations")}
-        </Button>
+        </button>
 
-        <Button variant="danger" className="w-100 mt-3" onClick={handleLogout}>
+        <button
+          className="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-900 transition duration-300 mb-2"
+          onClick={() => navigate("/admin/members")}
+        >
+          {t("manage_members")}
+        </button>
+
+        <button
+          className="w-full bg-gray-800 text-white py-2 rounded-lg shadow-md hover:bg-gray-900 transition duration-300 mb-2"
+          onClick={() => navigate("/admin/registrations")}
+        >
+          {t("manage_registrations")}
+        </button>
+
+        <button
+          className="w-full bg-red-600 text-white py-2 rounded-lg shadow-md hover:bg-red-700 transition duration-300 mt-3"
+          onClick={handleLogout}
+        >
           {t("admin_logout")}
-        </Button>
-      </Card>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }
 

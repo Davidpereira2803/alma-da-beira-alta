@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { Container, Card, Button, Form, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function AdminGallery() {
@@ -15,7 +14,10 @@ function AdminGallery() {
 
   const fetchImages = async () => {
     const querySnapshot = await getDocs(collection(db, "gallery"));
-    const imageList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const imageList = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     setImages(imageList);
   };
 
@@ -43,47 +45,63 @@ function AdminGallery() {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-      <Card className="p-4 shadow-lg text-center" style={{ maxWidth: "600px", width: "100%" }}>
-        <h2 className="fw-bold mb-4">{t("manage_gallery")}</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-xl bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          {t("manage_gallery")}
+        </h2>
 
         {/* Image Input Field */}
-        <Form.Group className="mb-3">
-          <Form.Label>{t("image_url")}</Form.Label>
-          <Form.Control
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-1">
+            {t("image_url")}
+          </label>
+          <input
             type="text"
             placeholder={t("enter_image_url")}
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
           />
-        </Form.Group>
+        </div>
 
         {/* Add Image Button */}
-        <Button variant="success" className="w-100 mb-3" onClick={handleAddImage}>
+        <button
+          className="w-full bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition duration-300 mb-3"
+          onClick={handleAddImage}
+        >
           {t("add_image")}
-        </Button>
+        </button>
 
         {/* Gallery Section */}
-        <h3 className="mt-4">{t("gallery_images")}</h3>
-        <Row className="justify-content-center">
+        <h3 className="text-xl font-semibold text-center mt-4">
+          {t("gallery_images")}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
           {images.map((img) => (
-            <Col key={img.id} md={4} className="mb-3">
-              <Card className="shadow-sm">
-                <Card.Img variant="top" src={img.url} alt={t("gallery_image_alt")} />
-                <Card.Body className="text-center">
-                  <Button variant="danger" size="sm" onClick={() => handleDeleteImage(img.id)}>
-                    {t("delete")}
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
+            <div key={img.id} className="bg-white shadow-sm rounded-lg overflow-hidden">
+              <img src={img.url} alt={t("gallery_image_alt")} className="w-full h-40 object-cover" />
+              <div className="p-2 text-center">
+                <button
+                  className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
+                  onClick={() => handleDeleteImage(img.id)}
+                >
+                  {t("delete")}
+                </button>
+              </div>
+            </div>
           ))}
-        </Row>
-        <Button variant="secondary" className="w-100 mt-3" href="/admin">
+        </div>
+
+        {/* Back Button */}
+        <button
+          onClick={() => window.history.back()}
+          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+        >
           {t("back_to_admin_panel")}
-        </Button>
-      </Card>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }
 

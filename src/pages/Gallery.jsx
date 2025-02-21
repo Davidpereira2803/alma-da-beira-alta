@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Container, Row, Col, Card } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function Gallery() {
@@ -18,27 +17,25 @@ function Gallery() {
   }, []);
 
   return (
-    <Container className="py-5 text-center">
-      <h2 className="fw-bold mb-4">{t("gallery")}</h2>
+    <div className="container mx-auto py-10 px-5">
+      <h2 className="text-3xl font-bold text-center mb-6">{t("gallery")}</h2>
+
       {images.length === 0 ? (
-        <p>{t("no_images_available")}</p>
+        <p className="text-center text-gray-600">{t("no_images_available")}</p>
       ) : (
-        <Row className="justify-content-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {images.map((img, index) => (
-            <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-              <Card className="shadow-sm">
-                <Card.Img
-                  variant="top"
-                  src={img.url}
-                  alt={t("gallery_image_alt")}
-                  className="img-fluid rounded"
-                />
-              </Card>
-            </Col>
+            <div key={index} className="shadow-lg rounded-lg overflow-hidden">
+              <img
+                src={img.url}
+                alt={t("gallery_image_alt")}
+                className="w-full h-60 object-cover rounded-lg"
+              />
+            </div>
           ))}
-        </Row>
+        </div>
       )}
-    </Container>
+    </div>
   );
 }
 

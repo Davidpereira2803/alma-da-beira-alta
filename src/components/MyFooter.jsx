@@ -1,30 +1,33 @@
 import { Link } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 
 function MyFooter() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const adminEmail = "admin@example.com";
 
   return (
-    <footer className="bg-dark text-white text-center py-3 mt-auto">
-      <Container>
+    <footer className="bg-stone-900 text-white text-center py-4 mt-auto">
+      <div className="container mx-auto">
         <p>© {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg</p>
-        
+
         {/* Show Admin Panel button only if admin is logged in */}
         {user && user.email === adminEmail && (
           <Link to="/admin">
-            <Button variant="primary" className="mt-2">Admin Panel</Button>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-2">
+              {t("admin_panel")}
+            </button>
           </Link>
         )}
 
         {/* Always show "Admin Login" button if the user is NOT logged in */}
-          <Link to="/login">
-            <Button variant="dark" className="mt-2">{t("admin_login")}</Button>
-          </Link>
-      </Container>
+        <Link to="/login">
+          <button className="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-lg mt-2 ml-3 text-xs">
+            {t("admin_login")}
+          </button>
+        </Link>
+      </div>
     </footer>
   );
 }

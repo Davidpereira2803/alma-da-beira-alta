@@ -24,6 +24,7 @@
     "event_location": "Location",
     "event_description": "Description",
     "event_pdf_url": "PDF Brochure URL (GitHub Link)",
+    "event_background_image_url": "Background Image URL",
     "event_pdf_brochure": "PDF Brochure",
     "actions": "Actions",
     "view_pdf": "View PDF",
