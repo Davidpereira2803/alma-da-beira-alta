@@ -138,7 +138,7 @@ function AdminEvents() {
                   <td className="border p-2">
                     {event.pdfUrl ? (
                       <a href={event.pdfUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                        {t("view_pdf")}
+                        {t("download_pdf")}
                       </a>
                     ) : (
                       "No PDF"

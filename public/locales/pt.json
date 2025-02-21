@@ -90,5 +90,11 @@
     "password": "Senha",
     "login": "Entrar",
     "email_confirmation_message": "Olá {{name}},\n\nObrigado pelo seu pedido de inscrição na Alma Da Beira Alta. Vamos analisar suas informações e entraremos em contato em breve.\n\nAtenciosamente,\nEquipe Alma Da Beira Alta",
-    "watch_our_video": "Assista ao nosso vídeo"
+    "watch_our_video": "Assista ao nosso vídeo",
+    "login_with_google": "Entrar com o Google",
+    "google_login_failed": "Falha ao entrar. Por favor, tente novamente.",
+    "forgot_password": "Esqueceu a senha?",
+    "send_reset_email": "Enviar e-mail de redefinição",
+    "password_reset_email_sent": "E-mail de redefinição enviado! Verifique sua caixa de entrada.",
+    "password_reset_failed": "Falha ao enviar e-mail de redefinição. Tente novamente."
 }

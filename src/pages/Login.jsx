@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth(); // Import googleLogin
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,12 +23,22 @@ function Login() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setError(null);
+    try {
+      await googleLogin();
+      navigate("/admin"); // Redirect after successful login
+    } catch (err) {
+      setError(t("google_login_failed"));
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <div className="flex justify-center items-center min-h-screen">	
+      <div className="flex justify-center items-center min-h-screen">
         <div className="bg-white p-6 rounded-lg shadow-lg w-3/5">
           <h2 className="text-2xl font-bold text-center mb-4">{t("admin_login")}</h2>
-          
+
           {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center mb-3">{error}</p>}
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -60,7 +70,20 @@ function Login() {
             >
               {t("login")}
             </button>
+
+            <button onClick={() => navigate("/forgot-password")} className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition text-center">
+              {t("forgot_password")}
+            </button>
           </form>
+
+          {/* Google Login Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full bg-gray-800 text-white py-2 rounded-lg mt-4 hover:bg-gray-900 transition flex justify-center items-center"
+          >
+          <img src="/google-logo.png" alt="Google Logo" className="w-5 h-5 mr-2" />
+            {t("login_with_google")}
+          </button>
         </div>
       </div>
     </div>

@@ -90,5 +90,11 @@
     "password": "Passwort",
     "login": "Anmelden",
     "email_confirmation_message": "Hallo {{name}},\n\nVielen Dank für Ihre Anmeldung bei Alma Da Beira Alta. Wir werden Ihre Informationen prüfen und uns bald bei Ihnen melden.\n\nMit freundlichen Grüßen,\nDas Alma Da Beira Alta Team",
-    "watch_our_video": "Sehen Sie unser Video"
+    "watch_our_video": "Sehen Sie unser Video",
+    "login_with_google": "Mit Google anmelden",
+    "google_login_failed": "Anmeldung fehlgeschlagen. Bitte versuche es erneut.",
+    "forgot_password": "Passwort vergessen?",
+    "send_reset_email": "Passwort-Reset-E-Mail senden",
+    "password_reset_email_sent": "Passwort-Reset-E-Mail gesendet! Überprüfe dein Postfach.",
+    "password_reset_failed": "Fehler beim Senden der Passwort-Reset-E-Mail. Versuche es erneut."
 }
