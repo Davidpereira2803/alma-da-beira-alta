@@ -67,7 +67,7 @@ function AdminGallery() {
 
         {/* Add Image Button */}
         <button
-          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 mb-3"
+          className="w-full bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition duration-300 mb-3"
           onClick={handleAddImage}
         >
           {t("add_image")}
@@ -96,7 +96,7 @@ function AdminGallery() {
         {/* Back Button */}
         <button
           onClick={() => window.history.back()}
-          className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
+          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
         >
           {t("back_to_admin_panel")}
         </button>

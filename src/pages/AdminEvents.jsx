@@ -112,7 +112,7 @@ function AdminEvents() {
             <input type="url" className="w-full p-2 border rounded" value={newEvent.backgroundImage} onChange={(e) => setNewEvent({ ...newEvent, backgroundImage: e.target.value })} />
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+          <button type="submit" className="w-full bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition">
             {t("add_event")}
           </button>
         </form>
@@ -160,7 +160,7 @@ function AdminEvents() {
 
         <button
           onClick={() => window.history.back()}
-          className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
+          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
         >
           {t("back_to_admin_panel")}
         </button>
