@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function Login() {
@@ -25,35 +24,44 @@ function Login() {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center">{t("admin_login")}</h2>
-      {error && <p className="alert alert-danger">{error}</p>}
-      <Form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow">
-        <Form.Group className="mb-3">
-          <Form.Label>{t("email")}</Form.Label>
-          <Form.Control 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </Form.Group>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center mb-4">{t("admin_login")}</h2>
+        
+        {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center mb-3">{error}</p>}
 
-        <Form.Group className="mb-3">
-          <Form.Label>{t("password")}</Form.Label>
-          <Form.Control 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </Form.Group>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 font-medium">{t("email")}</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-2 border rounded"
+            />
+          </div>
 
-        <Button variant="dark" type="submit" className="w-100">
-          {t("login")}
-        </Button>
-      </Form>
-    </Container>
+          <div>
+            <label className="block text-gray-700 font-medium">{t("password")}</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition"
+          >
+            {t("login")}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

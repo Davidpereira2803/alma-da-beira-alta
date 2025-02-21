@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, deleteDoc, addDoc, doc, query, orderBy, limit } from "firebase/firestore";
-import { Container, Table, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function AdminRegistrations() {
@@ -69,44 +68,62 @@ function AdminRegistrations() {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center">{t("pending_registrations")}</h2>
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>{t("name")}</th>
-            <th>{t("email")}</th>
-            <th>{t("phone")}</th>
-            <th>{t("address")}</th>
-            <th>{t("actions")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {registrations.map((reg) => (
-            <tr key={reg.id}>
-              <td>{reg.name}</td>
-              <td>{reg.email}</td>
-              <td>{reg.phone}</td>
-              <td>{reg.address}</td>
-              <td>
-                <Button variant="success" size="sm" onClick={() => approveMember(reg)}>
-                  {t("approve")}
-                </Button>
-                <Button variant="danger" size="sm" className="ms-2" onClick={() => rejectMember(reg.id)}>
-                  {t("reject")}
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Button variant="secondary" className="w-100 mt-3" href="/admin/register">
-        {t("register_member")}
-      </Button>
-      <Button variant="secondary" className="w-100 mt-3" href="/admin">
-        {t("back_to_admin_panel")}
-      </Button>
-    </Container>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          {t("pending_registrations")}
+        </h2>
+
+        {/* Registrations Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-300 text-gray-700">
+                <th className="border p-2">{t("name")}</th>
+                <th className="border p-2">{t("email")}</th>
+                <th className="border p-2">{t("phone")}</th>
+                <th className="border p-2">{t("address")}</th>
+                <th className="border p-2">{t("actions")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {registrations.map((reg) => (
+                <tr key={reg.id} className="text-center bg-gray-100">
+                  <td className="border p-2">{reg.name}</td>
+                  <td className="border p-2">{reg.email}</td>
+                  <td className="border p-2">{reg.phone}</td>
+                  <td className="border p-2">{reg.address}</td>
+                  <td className="border p-2 flex justify-center space-x-2">
+                    <button
+                      className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 transition"
+                      onClick={() => approveMember(reg)}
+                    >
+                      {t("approve")}
+                    </button>
+                    <button
+                      className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
+                      onClick={() => rejectMember(reg.id)}
+                    >
+                      {t("reject")}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Register Member & Back Button */}
+        <div className="mt-4 space-y-2">
+          <a href="/admin/register" className="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+            {t("register_member")}
+          </a>
+          <a href="/admin" className="block w-full text-center bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition">
+            {t("back_to_admin_panel")}
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 

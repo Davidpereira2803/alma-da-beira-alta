@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { db } from "../firebase";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
-import { Container, Form, Button } from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 import { useTranslation } from "react-i18next";
 
@@ -73,42 +72,87 @@ function RegisterMember() {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center">{t("register_member")}</h2>
-      <p className="text-center">{t("register_member_instruction")}</p>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          {t("register_member")}
+        </h2>
+        <p className="text-center text-gray-600 mb-4">{t("register_member_instruction")}</p>
 
-      {success && <p className="alert alert-success">{success}</p>}
-      {error && <p className="alert alert-danger">{error}</p>}
+        {/* Success & Error Messages */}
+        {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center">{success}</p>}
+        {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center">{error}</p>}
 
-      <Form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow">
-        <Form.Group className="mb-3">
-          <Form.Label>{t("name")}</Form.Label>
-          <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </Form.Group>
+        {/* Registration Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 font-medium">{t("name")}</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>{t("email")}</Form.Label>
-          <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required />
-        </Form.Group>
+          <div>
+            <label className="block text-gray-700 font-medium">{t("email")}</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>{t("phone")}</Form.Label>
-          <Form.Control type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
-        </Form.Group>
+          <div>
+            <label className="block text-gray-700 font-medium">{t("phone")}</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>{t("address")}</Form.Label>
-          <Form.Control type="text" name="address" value={formData.address} onChange={handleChange} required />
-        </Form.Group>
+          <div>
+            <label className="block text-gray-700 font-medium">{t("address")}</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>{t("additional_message")}</Form.Label>
-          <Form.Control as="textarea" rows={3} name="message" value={formData.message} onChange={handleChange} />
-        </Form.Group>
+          <div>
+            <label className="block text-gray-700 font-medium">{t("additional_message")}</label>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              rows="3"
+            ></textarea>
+          </div>
 
-        <Button variant="primary" type="submit">{t("submit")}</Button>
-      </Form>
-    </Container>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            {t("submit")}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 function AdminEvents() {
   const { t } = useTranslation();
   const [events, setEvents] = useState([]);
-  const [newEvent, setNewEvent] = useState({ title: "", date: "", description: "", pdfUrl: "" });
+  const [newEvent, setNewEvent] = useState({ title: "", date: "", description: "", pdfUrl: "", backgroundImage: "" });
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -40,11 +40,12 @@ function AdminEvents() {
     }
 
     const formattedPdfUrl = convertToRawGitHubLink(newEvent.pdfUrl);
+    const formattedBackgroundImage = convertToRawGitHubLink(newEvent.backgroundImage);
 
     try {
-      const docRef = await addDoc(collection(db, "events"), { ...newEvent, pdfUrl: formattedPdfUrl });
-      setEvents([...events, { id: docRef.id, ...newEvent, pdfUrl: formattedPdfUrl }]);
-      setNewEvent({ title: "", date: "", description: "", pdfUrl: "" });
+      const docRef = await addDoc(collection(db, "events"), { ...newEvent, pdfUrl: formattedPdfUrl, backgroundImage: formattedBackground});
+      setEvents([...events, { id: docRef.id, ...newEvent, pdfUrl: formattedPdfUrl, backgroundImage: formattedBackgroundImage }]);
+      setNewEvent({ title: "", date: "", description: "", pdfUrl: "", backgroundImage: "" });
 
       alert("Event added successfully!");
     } catch (error) {
@@ -104,6 +105,11 @@ function AdminEvents() {
               value={newEvent.pdfUrl}
               onChange={(e) => setNewEvent({ ...newEvent, pdfUrl: e.target.value })}
             />
+          </div>
+
+          <div className="mb-3">
+            <label className="block text-gray-700 font-medium">{t("event_background_image_url")}</label>
+            <input type="url" className="w-full p-2 border rounded" value={newEvent.backgroundImage} onChange={(e) => setNewEvent({ ...newEvent, backgroundImage: e.target.value })} />
           </div>
 
           <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">

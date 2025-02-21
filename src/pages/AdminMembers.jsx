@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { Container, Table, Button, Form, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function AdminMembers() {
@@ -69,109 +68,139 @@ function AdminMembers() {
   };
 
   return (
-    <Container className="mt-5">
-      <h2 className="text-center">{t("registered_members")}</h2>
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>{t("membership_number")}</th>
-            <th>{t("name")}</th>
-            <th>{t("email")}</th>
-            <th>{t("phone")}</th>
-            <th>{t("address")}</th>
-            <th>{t("message")}</th>
-            <th>{t("status")}</th>
-            <th>{t("actions")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {members.map((member) => (
-            <tr key={member.id} className={member.processed ? "table-success" : ""}>
-              <td>{member.membershipNumber}</td>
-              <td>{member.name}</td>
-              <td>{member.email}</td>
-              <td>{member.phone}</td>
-              <td>{member.address}</td>
-              <td>{member.message}</td>
-              <td>{member.processed ? t("status_paid") : t("status_pending")}</td>
-              <td>
-                {!member.processed && (
-                  <Button variant="success" size="sm" onClick={() => handleMarkProcessed(member.id)}>
-                    {t("mark_as_paid")}
-                  </Button>
-                )}
-                <Button variant="warning" size="sm" className="ms-2" onClick={() => handleEdit(member)}>
-                  {t("edit")}
-                </Button>
-                <Button variant="danger" size="sm" className="ms-2" onClick={() => handleDelete(member.id)}>
-                  {t("delete")}
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        {/* Footer Row: Display Total Members */}
-        <tfoot>
-          <tr>
-            <td colSpan="7"><strong>{t("total_members")}</strong></td>
-            <td><strong>{members.length}</strong></td>
-          </tr>
-        </tfoot>
-      </Table>
-      <Button variant="secondary" className="w-100 mt-3" href="/admin">
-        {t("back_to_admin_panel")}
-      </Button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">{t("registered_members")}</h2>
 
-      {/* Edit Member Modal */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{t("edit_member")}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-2">
-              <Form.Label>{t("name")}</Form.Label>
-              <Form.Control 
-                type="text" 
-                value={updatedData.name} 
-                onChange={(e) => setUpdatedData({ ...updatedData, name: e.target.value })} 
-              />
-            </Form.Group>
+        {/* Members Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-300 text-gray-700">
+                <th className="border p-2">{t("membership_number")}</th>
+                <th className="border p-2">{t("name")}</th>
+                <th className="border p-2">{t("email")}</th>
+                <th className="border p-2">{t("phone")}</th>
+                <th className="border p-2">{t("address")}</th>
+                <th className="border p-2">{t("message")}</th>
+                <th className="border p-2">{t("status")}</th>
+                <th className="border p-2">{t("actions")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {members.map((member) => (
+                <tr key={member.id} className={`text-center ${member.processed ? "bg-green-100" : ""}`}>
+                  <td className="border p-2">{member.membershipNumber}</td>
+                  <td className="border p-2">{member.name}</td>
+                  <td className="border p-2">{member.email}</td>
+                  <td className="border p-2">{member.phone}</td>
+                  <td className="border p-2">{member.address}</td>
+                  <td className="border p-2">{member.message}</td>
+                  <td className="border p-2">
+                    {member.processed ? t("status_paid") : t("status_pending")}
+                  </td>
+                  <td className="border p-2 space-x-2">
+                    {!member.processed && (
+                      <button
+                        className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 transition"
+                        onClick={() => handleMarkProcessed(member.id)}
+                      >
+                        {t("mark_as_paid")}
+                      </button>
+                    )}
+                    <button
+                      className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition"
+                      onClick={() => handleEdit(member)}
+                    >
+                      {t("edit")}
+                    </button>
+                    <button
+                      className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
+                      onClick={() => handleDelete(member.id)}
+                    >
+                      {t("delete")}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            {/* Footer Row: Display Total Members */}
+            <tfoot>
+              <tr className="bg-gray-200">
+                <td colSpan="7" className="border p-2 font-semibold text-gray-800">
+                  {t("total_members")}
+                </td>
+                <td className="border p-2 font-semibold text-gray-800">{members.length}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
 
-            <Form.Group className="mb-2">
-              <Form.Label>{t("email")}</Form.Label>
-              <Form.Control 
-                type="email" 
-                value={updatedData.email} 
-                onChange={(e) => setUpdatedData({ ...updatedData, email: e.target.value })} 
-              />
-            </Form.Group>
+        {/* Back Button */}
+        <button
+          className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
+          onClick={() => window.history.back()}
+        >
+          {t("back_to_admin_panel")}
+        </button>
 
-            <Form.Group className="mb-2">
-              <Form.Label>{t("phone")}</Form.Label>
-              <Form.Control 
-                type="text" 
-                value={updatedData.phone} 
-                onChange={(e) => setUpdatedData({ ...updatedData, phone: e.target.value })} 
+        {/* Edit Member Modal */}
+        {showEditModal && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+              <h3 className="text-lg font-bold mb-3">{t("edit_member")}</h3>
+              
+              <label className="block mb-2">{t("name")}</label>
+              <input
+                type="text"
+                className="w-full p-2 border rounded mb-3"
+                value={updatedData.name}
+                onChange={(e) => setUpdatedData({ ...updatedData, name: e.target.value })}
               />
-            </Form.Group>
 
-            <Form.Group className="mb-2">
-              <Form.Label>{t("address")}</Form.Label>
-              <Form.Control 
-                type="text" 
-                value={updatedData.address} 
-                onChange={(e) => setUpdatedData({ ...updatedData, address: e.target.value })} 
+              <label className="block mb-2">{t("email")}</label>
+              <input
+                type="email"
+                className="w-full p-2 border rounded mb-3"
+                value={updatedData.email}
+                onChange={(e) => setUpdatedData({ ...updatedData, email: e.target.value })}
               />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEditModal(false)}>{t("cancel")}</Button>
-          <Button variant="primary" onClick={handleSaveEdit}>{t("save_changes")}</Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+
+              <label className="block mb-2">{t("phone")}</label>
+              <input
+                type="text"
+                className="w-full p-2 border rounded mb-3"
+                value={updatedData.phone}
+                onChange={(e) => setUpdatedData({ ...updatedData, phone: e.target.value })}
+              />
+
+              <label className="block mb-2">{t("address")}</label>
+              <input
+                type="text"
+                className="w-full p-2 border rounded mb-3"
+                value={updatedData.address}
+                onChange={(e) => setUpdatedData({ ...updatedData, address: e.target.value })}
+              />
+
+              <div className="flex justify-end space-x-3 mt-4">
+                <button
+                  className="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 transition"
+                  onClick={() => setShowEditModal(false)}
+                >
+                  {t("cancel")}
+                </button>
+                <button
+                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                  onClick={handleSaveEdit}
+                >
+                  {t("save_changes")}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
