@@ -29,11 +29,6 @@
 
 ---
 
-## 🐟 **License**
-This project is licensed under the **MIT License**.
-
----
-
 ## 🔗 **Links**
 - **Live Website**: [Alma Da Beira Alta](https://alma-da-beira-alta.web.app/)
 - **GitHub Repository**: [GitHub](https://github.com/yourusername/alma-da-beira-alta)
