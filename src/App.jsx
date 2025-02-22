@@ -19,7 +19,7 @@ import AdminFinancePanel from "./pages/AdminFinancePanel";
 function App() {
   return (
     <Router>
-      <div className="w-full flex flex-col min-h-screen bg-[#E1BBA3]">
+      <div className="w-full flex flex-col min-h-screen bg-[#F8F4E3]">
         {/* Navbar */}
         <MyNavbar />
 

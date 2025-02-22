@@ -47,7 +47,7 @@ function Home() {
     <div className="max-w-7xl mx-auto px-4">
       {/* Who We Are Section */}
       <div className="flex justify-center items-center px-4 my-5">
-        <div className="bg-[#E4E5C8] text-black py-5 rounded-lg w-4/5 text-center">
+        <div className="bg-[#2E2A26] text-black py-5 rounded-lg w-4/5 text-center">
           <h2 className="text-2xl font-bold my-3">{t("who_we_are")}</h2>
           <p className="text-lg mt-3 w-1/2 mx-auto text-center">{t("who_we_are_text")}</p>
           <div className="mt-4 w-fit mx-auto text-center">
@@ -64,7 +64,7 @@ function Home() {
 
       {/* Upcoming Event Section */}
       <div className="flex justify-center text-center px-4 my-5">
-        <div className="bg-[#EBD1C1] text-white p-6 rounded-lg w-4/5">
+        <div className="bg-[#D46A4C] text-white p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("upcoming_event")}</h3>
           {nearestEvent ? (
             <div className="p-3 border rounded shadow-sm bg-stone-800 text-white mt-3 w-3/4 mx-auto">
@@ -82,7 +82,7 @@ function Home() {
                 </a>
               )}
               <Link to="/events">
-                <button className="bg-stone-700 text-white px-4 py-2 rounded-lg mt-2">{t("view_all_events")}</button>
+                <button className="bg-[#C8102E] text-white px-4 py-2 rounded-lg mt-2">{t("view_all_events")}</button>
               </Link>
             </div>
           ) : (
@@ -138,10 +138,18 @@ function Home() {
           <p><FaPhone className="inline-block mr-2 text-stone-500" /> {t("phone")}: +352 123 456 789</p>
           <p className="mt-4">{t("follow_us")}</p>
           <div className="flex justify-center gap-4 mt-3">
-            <FaFacebook size={30} className="text-stone-500" />
-            <FaInstagram size={30} className="text-stone-500" />
-            <FaYoutube size={30} className="text-stone-500" />
-            <FaTiktok size={30} className="text-stone-500" />
+            <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+              <FaFacebook size={30} className="text-stone-500 hover:text-blue-600" />
+            </a>
+            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+              <FaInstagram size={30} className="text-stone-500 hover:text-pink-500" />
+            </a>
+            <a href="https://www.youtube.com/channel/yourchannel" target="_blank" rel="noopener noreferrer">
+              <FaYoutube size={30} className="text-stone-500 hover:text-red-600" />
+            </a>
+            <a href="https://www.tiktok.com/@yourprofile" target="_blank" rel="noopener noreferrer">
+              <FaTiktok size={30} className="text-stone-500 hover:text-black" />
+            </a>
           </div>
         </div>
       </div>
