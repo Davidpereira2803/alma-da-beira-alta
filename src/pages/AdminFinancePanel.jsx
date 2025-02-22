@@ -118,6 +118,13 @@ function FinancePanel() {
           {editingTransaction ? t("save_changes") : t("add_transaction")}
         </button>
       </form>
+
+      <button
+          onClick={() => window.history.back()}
+          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+        >
+          {t("back_to_admin_panel")}
+        </button>
     </div>
   );
 }
