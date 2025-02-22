@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.svg";
 import { useTranslation } from "react-i18next";
 
 function MyNavbar() {
