@@ -49,7 +49,7 @@ function Events() {
                 minHeight: "300px",
               }}
             >
-              <div className="bg-black/50 p-4 rounded">
+              <div className="bg-black/70 p-4 rounded">
                 <h3 className="text-xl font-bold">{event.title}</h3>
                 <p className="text-sm">{t("event_date")}: {event.date}</p>
                 <p className="text-sm">{t("event_location")}: {event.location}</p>
@@ -94,7 +94,7 @@ function Events() {
                 minHeight: "300px",
               }}
             >
-              <div className="bg-black/50 p-4 rounded">
+              <div className="bg-black/70 p-4 rounded">
                 <h3 className="text-xl font-bold">{event.title}</h3>
                 <p className="text-sm">{t("event_date")}: {event.date}</p>
                 <p className="text-sm">{t("event_location")}: {event.location}</p>

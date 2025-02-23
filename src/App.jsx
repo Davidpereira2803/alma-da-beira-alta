@@ -15,11 +15,13 @@ import AdminRegistrations from "./pages/AdminRegistrations";
 import AdminRegisterMember from "./pages/AdminRegisterMember";
 import ForgotPassword from "./pages/ForgotPassword";
 import AdminFinancePanel from "./pages/AdminFinancePanel";
+import AdminEventRegistrations from "./pages/AdminEventRegistrations";
+import AdminManageEventRegistrations from "./pages/AdminManageEventRegistrations";
 
 function App() {
   return (
     <Router>
-      <div className="w-full flex flex-col min-h-screen bg-gray-100">
+      <div className="w-full flex flex-col min-h-screen bg-[#B6AA84]">
         {/* Navbar */}
         <MyNavbar />
 
@@ -30,17 +32,19 @@ function App() {
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/register" element={<RegisterMember />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+
+            {/* Protected Admin Routes */}
             <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} />
             <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} />
             <Route path="/admin/register" element={<ProtectedRoute><AdminRegisterMember /></ProtectedRoute>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
-
-            {/* Protected Admin Routes */}
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
             <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
+            <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
+            <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
           </Routes>
         </main>
 

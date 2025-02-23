@@ -108,5 +108,21 @@
     "type": "Type",
     "income": "Income",
     "expense": "Expense",
-    "add_transaction": "Add Transaction"
+    "add_transaction": "Add Transaction",
+    "event_registrations": "Event Registrations",
+    "select_event": "Select an Event",
+    "choose_event": "Choose an Event",
+    "arrived": "Arrived",
+    "paid": "Paid",
+    "mark_arrived": "Mark Arrived",
+    "mark_paid": "Mark Paid",
+    "general_management": "General Management",
+    "finance": "Finance",
+    "gallery_management": "Gallery Management",
+    "event_people_list": "Event People List",
+    "manage_event_registrations": "Manage Event Registrations",
+    "events_management": "Events Management",
+    "total_people": "Total People",
+    "price": "Price",
+    "is_member": "Member"
     }

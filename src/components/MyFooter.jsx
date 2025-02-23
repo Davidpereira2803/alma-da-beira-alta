@@ -8,10 +8,10 @@ function MyFooter() {
   const adminEmail = "admin@example.com";
 
   return (
-    <footer className="bg-stone-900 text-white text-center py-4 mt-auto">
+    <footer className="bg-[#B6AA84] text-black text-center py-4 mt-auto">
       <div className="container mx-auto">
         <p>© {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg</p>
-        <p className="text-xs my-3 text-gray-400">Developed & Maintained by David Pereira de Magalhaes</p>
+        <p className="text-xs my-3 text-black">Developed & Maintained by David Pereira de Magalhaes</p>
 
         {/* Show Admin Panel button only if admin is logged in */}
         {user && user.email === adminEmail && (
