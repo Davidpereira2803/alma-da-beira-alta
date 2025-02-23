@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import im from "../assets/Beira-Alta.jpg";
 
 function Home() {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ function Home() {
 
       {/* Image Section */}
       <div className="flex justify-center items-center px-4 my-5">
-        <img src="\src\assets\Beira-Alta.jpg" alt="Alma da Beira Alta" className="w-4/5 md:w-4/5 h-[40vh] md:h-[50vh] object-cover rounded-lg" />
+        <img src={ im } alt="Alma da Beira Alta" className="w-4/5 md:w-4/5 h-[40vh] md:h-[50vh] object-cover rounded-lg" />
       </div>
 
       {/* Who We Are Section */}
