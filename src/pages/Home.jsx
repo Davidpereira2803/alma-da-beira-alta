@@ -44,30 +44,51 @@ function Home() {
 
   return (
     <>
-    <div className="max-w-7xl mx-auto px-4">
+
+    <div className="w-full">
+
+      {/* Image Section */}
+      <div className="flex justify-center items-center px-4 my-5">
+        <img src="\src\assets\Beira-Alta.jpg" alt="Alma da Beira Alta" className="w-4/5 md:w-4/5 h-[40vh] md:h-[50vh] object-cover rounded-lg" />
+      </div>
+
       {/* Who We Are Section */}
       <div className="flex justify-center items-center px-4 my-5">
-        <div className="bg-[#2E2A26] text-black py-5 rounded-lg w-4/5 text-center">
+        <div className="bg-[#B6AA84] text-black py-5 rounded-lg w-4/5 text-center">
           <h2 className="text-2xl font-bold my-3">{t("who_we_are")}</h2>
           <p className="text-lg mt-3 w-1/2 mx-auto text-center">{t("who_we_are_text")}</p>
           <div className="mt-4 w-fit mx-auto text-center">
             {t("association_leaders")}
             <ul className="list-none text-left mt-3">
-              <li><strong>{t("president")}:</strong> <span className="text-gray-400">Daisy F. Pereira</span></li>
-              <li><strong>{t("vice_president")}:</strong> <span className="text-gray-400">S. Monteiro Da Silva</span></li>
-              <li><strong>{t("secretary")}:</strong> <span className="text-gray-400">Ana I. Esteves</span></li>
-              <li><strong>{t("treasurer")}:</strong> <span className="text-gray-400">Jessica Pereira Braz</span></li>
+              <li><strong>{t("president")}:</strong> <span className="text-gray-900">Daisy F. Pereira</span></li>
+              <li><strong>{t("vice_president")}:</strong> <span className="text-gray-900">S. Monteiro Da Silva</span></li>
+              <li><strong>{t("secretary")}:</strong> <span className="text-gray-900">Ana I. Esteves</span></li>
+              <li><strong>{t("treasurer")}:</strong> <span className="text-gray-900">Jessica Pereira Braz</span></li>
             </ul>
           </div>
         </div>
       </div>
 
+      {/* Latest Gallery Section */}
+      <div className="flex justify-center  my-5 px-4">
+        <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
+          <h3 className="text-xl font-bold my-3">{t("latest_gallery")}</h3>
+          {latestImage ? (
+            <Link to="/gallery">
+              <img src={latestImage.url} alt={t("gallery_image_alt")} className="rounded-lg mt-3 shadow-lg w-full" />
+            </Link>
+          ) : (
+            <p>{t("no_images_available")}</p>
+          )}
+        </div>
+      </div>
+
       {/* Upcoming Event Section */}
-      <div className="flex justify-center text-center px-4 my-5">
-        <div className="bg-[#D46A4C] text-white p-6 rounded-lg w-4/5">
+      <div className="flex justify-center px-4 my-5">
+        <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("upcoming_event")}</h3>
           {nearestEvent ? (
-            <div className="p-3 border rounded shadow-sm bg-stone-800 text-white mt-3 w-3/4 mx-auto">
+            <div className="p-3 border rounded shadow-sm text-center bg-stone-800 text-white mt-3 mx-auto min-h-[50vh]">
               <h4 className="font-bold">{nearestEvent.title}</h4>
               <p><strong>{t("date")}:</strong> {nearestEvent.date}</p>
               <p><strong>{t("location")}:</strong> {nearestEvent.location}</p>
@@ -91,24 +112,9 @@ function Home() {
         </div>
       </div>
 
-      {/* Latest Gallery Section */}
-      <div className="flex justify-center text-center my-5 px-4">
-        <div className="bg-[#EBD1C1] text-white p-6 rounded-lg shadow-lg w-4/5">
-          <h3 className="text-xl font-bold my-3">{t("latest_gallery")}</h3>
-          {latestImage ? (
-            <img src={latestImage.url} alt={t("gallery_image_alt")} className="rounded-lg mt-3 shadow-lg w-full" />
-          ) : (
-            <p>{t("no_images_available")}</p>
-          )}
-          <Link to="/gallery">
-            <button className="bg-stone-700 text-white px-4 py-2 rounded-lg mt-3">{t("view_full_gallery")}</button>
-          </Link>
-        </div>
-      </div>
-
       {/* YouTube Video Section */}
       <div className="flex justify-center text-center my-5 px-4">
-        <div className="bg-[#EBD1C1] text-white p-6 rounded-lg shadow-lg w-4/5">
+        <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("watch_our_video")}</h3>
           <iframe
             className="w-full aspect-video mt-3 rounded-lg"
@@ -121,7 +127,7 @@ function Home() {
 
       {/* Join Us Section */}
       <div className="flex justify-center text-center my-5 px-4">
-        <div className="bg-[#EBD1C1] text-white p-6 rounded-lg shadow-lg w-4/5">
+        <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("join_us")}</h3>
           <p>{t("join_us_text")}</p>
           <Link to="/register">
@@ -132,7 +138,7 @@ function Home() {
 
       {/* Contact Section */}
       <div className="flex justify-center text-center my-5 px-4">
-        <div className="bg-[#E4E5C8] text-white p-6 rounded-lg shadow-lg w-4/5">
+        <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("contact")}</h3>
           <p><FaEnvelope className="inline-block mr-2 text-stone-500 " /> {t("email")}: <a href="mailto:info@almadabeiraalta.com" className="text-blue-400">info@almadabeiraalta.com</a></p>
           <p><FaPhone className="inline-block mr-2 text-stone-500" /> {t("phone")}: +352 123 456 789</p>

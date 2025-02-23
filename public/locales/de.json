@@ -108,5 +108,12 @@
     "type": "Typ",
     "income": "Einnahme",
     "expense": "Ausgabe",
-    "add_transaction": "Transaktion hinzufügen"
+    "add_transaction": "Transaktion hinzufügen",
+    "event_registrations": "Veranstaltungsanmeldungen",
+    "select_event": "Wähle eine Veranstaltung",
+    "choose_event": "Veranstaltung auswählen",
+    "arrived": "Angekommen",
+    "paid": "Bezahlt",
+    "mark_arrived": "Als angekommen markieren",
+    "mark_paid": "Als bezahlt markieren"
 }

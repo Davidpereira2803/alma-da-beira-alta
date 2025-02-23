@@ -15,11 +15,13 @@ import AdminRegistrations from "./pages/AdminRegistrations";
 import AdminRegisterMember from "./pages/AdminRegisterMember";
 import ForgotPassword from "./pages/ForgotPassword";
 import AdminFinancePanel from "./pages/AdminFinancePanel";
+import AdminEventRegistrations from "./pages/AdminEventRegistrations";
+import AdminManageEventRegistrations from "./pages/AdminManageEventRegistrations";
 
 function App() {
   return (
     <Router>
-      <div className="w-full flex flex-col min-h-screen bg-[#F8F4E3]">
+      <div className="w-full flex flex-col min-h-screen bg-[#B6AA84]">
         {/* Navbar */}
         <MyNavbar />
 
@@ -36,6 +38,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
+            <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
+            <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
 
             {/* Protected Admin Routes */}
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
