@@ -121,5 +121,8 @@
     "gallery_management": "Gallery Management",
     "event_people_list": "Event People List",
     "manage_event_registrations": "Manage Event Registrations",
-    "events_management": "Events Management"
+    "events_management": "Events Management",
+    "total_people": "Total People",
+    "price": "Price",
+    "is_member": "Member"
     }

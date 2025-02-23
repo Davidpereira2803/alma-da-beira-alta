@@ -121,5 +121,8 @@
   "gallery_management": "Gestion de la galerie",
   "event_people_list": "Liste des participants à l'événement",
   "manage_event_registrations": "Gérer les inscriptions aux événements",
-  "events_management": "Gestion des événements"
+  "events_management": "Gestion des événements",
+  "total_people": "Nombre total de personnes",
+  "price": "Prix",
+  "is_member": "Membre"
 }

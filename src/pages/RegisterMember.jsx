@@ -72,7 +72,7 @@ function RegisterMember() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+    <div className="flex justify-center items-center min-h-screen bg-[#B6AA84] p-6">
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
           {t("register_member")}

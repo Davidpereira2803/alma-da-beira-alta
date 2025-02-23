@@ -51,7 +51,8 @@ function AdminEventRegistrations() {
   // Calculate total revenue from paid attendees
   const totalRevenue = registrations
     .filter((reg) => reg.paid)
-    .reduce((sum, reg) => sum + (reg.isMember ? eventPrices.memberPrice : eventPrices.regularPrice), 0);
+    .reduce((sum, reg) => sum + Number(reg.isMember ? eventPrices.memberPrice : eventPrices.regularPrice), 0);
+
 
   return (
     <div className="max-w-5xl mx-auto p-6">

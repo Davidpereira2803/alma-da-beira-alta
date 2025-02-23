@@ -121,5 +121,8 @@
     "gallery_management": "Galerie-Verwaltung",
     "event_people_list": "Teilnehmerliste der Veranstaltung",
     "manage_event_registrations": "Event-Anmeldungen verwalten",
-    "events_management": "Veranstaltungsverwaltung"
+    "events_management": "Veranstaltungsverwaltung",
+    "total_people": "Gesamtanzahl der Personen",
+    "price": "Preis",
+    "is_member": "Mitglied"
 }
