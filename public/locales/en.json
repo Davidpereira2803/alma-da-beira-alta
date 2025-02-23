@@ -115,5 +115,11 @@
     "arrived": "Arrived",
     "paid": "Paid",
     "mark_arrived": "Mark Arrived",
-    "mark_paid": "Mark Paid"
+    "mark_paid": "Mark Paid",
+    "general_management": "General Management",
+    "finance": "Finance",
+    "gallery_management": "Gallery Management",
+    "event_people_list": "Event People List",
+    "manage_event_registrations": "Manage Event Registrations",
+    "events_management": "Events Management"
     }

@@ -32,19 +32,19 @@ function App() {
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/register" element={<RegisterMember />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+
+            {/* Protected Admin Routes */}
             <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} />
             <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} />
             <Route path="/admin/register" element={<ProtectedRoute><AdminRegisterMember /></ProtectedRoute>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
-            <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
-            <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
-
-            {/* Protected Admin Routes */}
             <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
             <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
+            <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
+            <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
           </Routes>
         </main>
 

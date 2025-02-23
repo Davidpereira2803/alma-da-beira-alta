@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { collection, doc, getDocs, deleteDoc, addDoc } from "firebase/firestore";
+import { collection, doc, getDocs, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 
 function AdminManageEventRegistrations() {
@@ -8,7 +8,12 @@ function AdminManageEventRegistrations() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [registrations, setRegistrations] = useState([]);
-  const [newRegistration, setNewRegistration] = useState({ name: "", description: "" });
+  const [editingRegistration, setEditingRegistration] = useState(null);
+  const [newRegistration, setNewRegistration] = useState({
+    name: "",
+    description: "",
+    isMember: false,
+  });
 
   useEffect(() => {
     fetchEvents();
@@ -28,15 +33,34 @@ function AdminManageEventRegistrations() {
     setRegistrations(registrationsList);
   };
 
-  const handleAddRegistration = async (e) => {
+  const handleAddOrUpdateRegistration = async (e) => {
     e.preventDefault();
     if (!selectedEvent || !newRegistration.name || !newRegistration.description) return;
-    
-    const eventRef = collection(db, `events/${selectedEvent}/registrations`);
-    const docRef = await addDoc(eventRef, { ...newRegistration, arrived: false, paid: false });
 
-    setRegistrations([...registrations, { id: docRef.id, ...newRegistration, arrived: false, paid: false }]);
-    setNewRegistration({ name: "", description: "" });
+    if (editingRegistration) {
+      // Update existing registration
+      await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), newRegistration);
+      setRegistrations(registrations.map((reg) =>
+        reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration } : reg
+      ));
+      setEditingRegistration(null);
+    } else {
+      // Add new registration
+      const eventRef = collection(db, `events/${selectedEvent}/registrations`);
+      const docRef = await addDoc(eventRef, {
+        ...newRegistration,
+        arrived: false,
+        paid: false,
+      });
+      setRegistrations([...registrations, { id: docRef.id, ...newRegistration, arrived: false, paid: false }]);
+    }
+
+    setNewRegistration({ name: "", description: "", isMember: false });
+  };
+
+  const handleEditRegistration = (registration) => {
+    setNewRegistration(registration);
+    setEditingRegistration(registration);
   };
 
   const handleDeleteRegistration = async (userId) => {
@@ -63,11 +87,11 @@ function AdminManageEventRegistrations() {
         </select>
       </div>
 
-      {/* Add Registration Form */}
+      {/* Add/Edit Registration Form */}
       {selectedEvent && (
-        <form onSubmit={handleAddRegistration} className="mt-4 p-4 bg-white shadow-lg rounded-lg">
-          <h3 className="text-lg font-bold mb-2">{t("add_registration")}</h3>
-          
+        <form onSubmit={handleAddOrUpdateRegistration} className="mt-4 p-4 bg-white shadow-lg rounded-lg">
+          <h3 className="text-lg font-bold mb-2">{editingRegistration ? t("edit_registration") : t("add_registration")}</h3>
+
           <div className="mb-2">
             <label className="block">{t("name")}</label>
             <input
@@ -90,8 +114,19 @@ function AdminManageEventRegistrations() {
             />
           </div>
 
+          {/* Membership Checkbox */}
+          <div className="mb-2 flex items-center">
+            <input
+              type="checkbox"
+              checked={newRegistration.isMember}
+              onChange={(e) => setNewRegistration({ ...newRegistration, isMember: e.target.checked })}
+              className="mr-2"
+            />
+            <label>{t("is_member")}</label>
+          </div>
+
           <button type="submit" className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition">
-            {t("add_person")}
+            {editingRegistration ? t("save_changes") : t("add_person")}
           </button>
         </form>
       )}
@@ -103,6 +138,7 @@ function AdminManageEventRegistrations() {
             <tr className="bg-gray-200">
               <th className="border p-2">{t("name")}</th>
               <th className="border p-2">{t("description")}</th>
+              <th className="border p-2">{t("is_member")}</th>
               <th className="border p-2">{t("actions")}</th>
             </tr>
           </thead>
@@ -111,7 +147,14 @@ function AdminManageEventRegistrations() {
               <tr key={reg.id} className="text-center">
                 <td className="border p-2">{reg.name}</td>
                 <td className="border p-2">{reg.description}</td>
-                <td className="border p-2">
+                <td className="border p-2">{reg.isMember ? "✅" : "❌"}</td>
+                <td className="border p-2 flex space-x-2 justify-center">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    onClick={() => handleEditRegistration(reg)}
+                  >
+                    {t("edit")}
+                  </button>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded"
                     onClick={() => handleDeleteRegistration(reg.id)}
@@ -125,16 +168,18 @@ function AdminManageEventRegistrations() {
             <tr className="bg-gray-100 text-center font-bold">
               <td className="border p-2" colSpan="2">{t("total_people")}</td>
               <td className="border p-2">{registrations.length}</td>
+              <td className="border p-2">{registrations.filter(reg => reg.isMember).length} {t("members")}</td>
             </tr>
           </tbody>
         </table>
       )}
-        <button
-          onClick={() => window.history.back()}
-          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
-        >
-          {t("back_to_admin_panel")}
-        </button>
+
+      <button
+        onClick={() => window.history.back()}
+        className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+      >
+        {t("back_to_admin_panel")}
+      </button>
     </div>
   );
 }
