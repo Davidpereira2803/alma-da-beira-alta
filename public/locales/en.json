@@ -124,5 +124,13 @@
     "events_management": "Events Management",
     "total_people": "Total People",
     "price": "Price",
-    "is_member": "Member"
+    "is_member": "Member",
+    "search_name": "Search by Name",
+    "members": "Members",
+    "remove": "Supprimer",
+    "add_registration": "Add Registration",
+    "add_person": "Add Person",
+    "member_price": "Member Price",
+    "regular_price": "Regular Price",
+    "location": "Location"
     }

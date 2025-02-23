@@ -124,5 +124,13 @@
     "events_management": "Veranstaltungsverwaltung",
     "total_people": "Gesamtanzahl der Personen",
     "price": "Preis",
-    "is_member": "Mitglied"
+    "is_member": "Mitglied",
+    "search_name": "Nach Namen suchen",
+    "members": "Mitglieder",
+    "remove": "Entfernen",
+    "add_registration": "Anmeldung hinzufügen",
+    "add_person": "Person hinzufügen",
+    "member_price": "Mitgliedspreis",
+    "regular_price": "Normalpreis",
+    "location": "Ort"
 }

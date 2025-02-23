@@ -129,7 +129,7 @@ function AdminEvents() {
           </div>
 
           <div className="mb-3">
-            <label className="block text-gray-700 font-medium">{t("pdf_url")}</label>
+            <label className="block text-gray-700 font-medium">{t("event_pdf_url")}</label>
             <input
               type="text"
               className="w-full p-2 border rounded"
@@ -139,7 +139,7 @@ function AdminEvents() {
           </div>
 
           <div className="mb-3">
-            <label className="block text-gray-700 font-medium">{t("background_image_url")}</label>
+            <label className="block text-gray-700 font-medium">{t("event_background_image_url")}</label>
             <input
               type="text"
               className="w-full p-2 border rounded"

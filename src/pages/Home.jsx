@@ -89,23 +89,44 @@ function Home() {
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("upcoming_event")}</h3>
           {nearestEvent ? (
-            <div className="p-3 border rounded shadow-sm text-center bg-stone-800 text-white mt-3 mx-auto min-h-[50vh]">
-              <h4 className="font-bold">{nearestEvent.title}</h4>
-              <p><strong>{t("date")}:</strong> {nearestEvent.date}</p>
-              <p><strong>{t("location")}:</strong> {nearestEvent.location}</p>
-              <p>{nearestEvent.description}</p>
-              {nearestEvent.pdfUrl && (
-                <a
-                  href={nearestEvent.pdfUrl}
-                  target="_blank"
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg mt-2 block"
-                >
-                  {t("download_pdf")}
-                </a>
+            <div className="flex flex-wrap justify-center items-center bg-black text-white mt-3 mx-auto min-h-[50vh] p-8 rounded gap-3">
+              
+              <div className="text-left pl-4 max-w-[450px] flex-1">
+                <h4 className="text-4xl font-bold mb-6">{nearestEvent.title}</h4>
+                <p className="mb-2"><strong>{t("date")}:</strong> {nearestEvent.date}</p>
+                <p className="mb-2"><strong>{t("location")}:</strong> {nearestEvent.location}</p>
+                <p className="mb-2"><strong>{t("member_price")}:</strong> {nearestEvent.memberPrice}€</p>
+                <p className="mb-2"><strong>{t("regular_price")}:</strong> {nearestEvent.regularPrice}€</p>
+                <p className="mb-4">{nearestEvent.description}</p>
+
+                <div className="flex flex-col w-full max-w-[250px]">
+                  {nearestEvent.pdfUrl && (
+                    <a
+                      href={nearestEvent.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-600 text-white px-4 py-2 rounded-lg my-2 w-full text-center"
+                    >
+                      {t("download_pdf")}
+                    </a>
+                  )}
+                  <Link to="/events" className="w-full">
+                    <button className="bg-[#C8102E] text-white px-4 py-2 rounded-lg my-2 w-full">
+                      {t("view_all_events")}
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {nearestEvent.backgroundImage && (
+                <div className="flex-1 flex justify-center">
+                  <img 
+                    src={nearestEvent.backgroundImage} 
+                    alt={nearestEvent.title} 
+                    className="rounded-lg shadow-lg w-[200px] h-[320px] object-cover"
+                  />
+                </div>
               )}
-              <Link to="/events">
-                <button className="bg-[#C8102E] text-white px-4 py-2 rounded-lg mt-2">{t("view_all_events")}</button>
-              </Link>
             </div>
           ) : (
             <p>{t("no_upcoming_events")}</p>
@@ -114,7 +135,7 @@ function Home() {
       </div>
 
       {/* YouTube Video Section */}
-      <div className="flex justify-center text-center my-5 px-4">
+      <div className="flex justify-center my-5 px-4">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("watch_our_video")}</h3>
           <iframe

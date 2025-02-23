@@ -9,6 +9,7 @@ function AdminEventRegistrations() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventPrices, setEventPrices] = useState({ memberPrice: 0, regularPrice: 0 });
   const [registrations, setRegistrations] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // <-- New state for search
 
   useEffect(() => {
     fetchEvents();
@@ -24,7 +25,7 @@ function AdminEventRegistrations() {
     setSelectedEvent(eventId);
     const eventDoc = doc(db, `events/${eventId}`);
     const eventSnapshot = await getDocs(collection(db, `events/${eventId}/registrations`));
-    
+
     const eventData = (await getDocs(collection(db, "events"))).docs
       .find((doc) => doc.id === eventId)?.data();
 
@@ -48,11 +49,18 @@ function AdminEventRegistrations() {
     await updateDoc(registrationRef, { [field]: !registrations.find((reg) => reg.id === userId)[field] });
   };
 
+  const filteredRegistrations = registrations
+    .sort((a, b) => {
+      // Move matching search results to the top
+      const aMatches = a.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const bMatches = b.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return bMatches - aMatches; // true is 1, false is 0, so true moves up
+    });
+
   // Calculate total revenue from paid attendees
   const totalRevenue = registrations
     .filter((reg) => reg.paid)
     .reduce((sum, reg) => sum + Number(reg.isMember ? eventPrices.memberPrice : eventPrices.regularPrice), 0);
-
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -73,6 +81,17 @@ function AdminEventRegistrations() {
         </select>
       </div>
 
+      {/* Search Bar */}
+      <div className="mb-4">
+        <input
+          type="text"
+          className="w-full p-2 border rounded"
+          placeholder={t("search_name")}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
       {/* Registrations Table */}
       {selectedEvent && (
         <table className="w-full border-collapse border border-gray-300 mt-4">
@@ -88,7 +107,7 @@ function AdminEventRegistrations() {
             </tr>
           </thead>
           <tbody>
-            {registrations.map((reg) => {
+            {filteredRegistrations.map((reg) => {
               const price = reg.isMember ? eventPrices.memberPrice : eventPrices.regularPrice;
               return (
                 <tr key={reg.id} className="text-center">
