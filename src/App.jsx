@@ -17,6 +17,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import AdminFinancePanel from "./pages/AdminFinancePanel";
 import AdminEventRegistrations from "./pages/AdminEventRegistrations";
 import AdminManageEventRegistrations from "./pages/AdminManageEventRegistrations";
+import QRScanner from "./pages/QRScanner";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
             <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
             <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
+            <Route path="/admin/qr-scanner" element={<ProtectedRoute><QRScanner /></ProtectedRoute>} />
           </Routes>
         </main>
 

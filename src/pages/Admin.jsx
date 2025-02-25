@@ -94,6 +94,13 @@ function Admin() {
           >
             {t("admin_logout")}
           </button>
+
+          <button 
+            className="w-full bg-red-600 text-white py-2 rounded-lg shadow-md hover:bg-red-700 transition duration-300 mt-3"
+            onClick={() => navigate("/admin/qr-scanner")}
+          >
+            {t("QR-Scanner")}
+          </button>
         </div>
 
       </div>

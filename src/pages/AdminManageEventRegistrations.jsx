@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, doc, getDocs, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import QRCodeGenerator from "../components/QR-Generator";
 
 function AdminManageEventRegistrations() {
   const { t } = useTranslation();
@@ -9,10 +10,13 @@ function AdminManageEventRegistrations() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [registrations, setRegistrations] = useState([]);
   const [editingRegistration, setEditingRegistration] = useState(null);
+  const [visibleQR, setVisibleQR] = useState(null);
+
   const [newRegistration, setNewRegistration] = useState({
     name: "",
     description: "",
     isMember: false,
+    qrCodeData: "",
   });
 
   useEffect(() => {
@@ -37,15 +41,16 @@ function AdminManageEventRegistrations() {
     e.preventDefault();
     if (!selectedEvent || !newRegistration.name || !newRegistration.description) return;
 
+    const qrCodeData = `${newRegistration.name} - ${selectedEvent}`;
+    newRegistration.qrCodeData = qrCodeData;
+
     if (editingRegistration) {
-      // Update existing registration
       await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), newRegistration);
       setRegistrations(registrations.map((reg) =>
         reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration } : reg
       ));
       setEditingRegistration(null);
     } else {
-      // Add new registration
       const eventRef = collection(db, `events/${selectedEvent}/registrations`);
       const docRef = await addDoc(eventRef, {
         ...newRegistration,
@@ -55,7 +60,7 @@ function AdminManageEventRegistrations() {
       setRegistrations([...registrations, { id: docRef.id, ...newRegistration, arrived: false, paid: false }]);
     }
 
-    setNewRegistration({ name: "", description: "", isMember: false });
+    setNewRegistration({ name: "", description: "", isMember: false, qrCodeData: "" });
   };
 
   const handleEditRegistration = (registration) => {
@@ -66,6 +71,10 @@ function AdminManageEventRegistrations() {
   const handleDeleteRegistration = async (userId) => {
     await deleteDoc(doc(db, `events/${selectedEvent}/registrations/${userId}`));
     setRegistrations(registrations.filter((reg) => reg.id !== userId));
+  };
+
+  const toggleQRVisibility = (regId) => {
+    setVisibleQR(visibleQR === regId ? null : regId);
   };
 
   return (
@@ -131,6 +140,13 @@ function AdminManageEventRegistrations() {
         </form>
       )}
 
+      {/* Display QR Code when "Show QR" is clicked */}
+      {visibleQR && (
+        <div className="mt-4 text-center">
+          <QRCodeGenerator text={registrations.find((reg) => reg.id === visibleQR)?.qrCodeData || ""} />
+        </div>
+      )}
+
       {/* Registrations List */}
       {selectedEvent && (
         <table className="w-full border-collapse border border-gray-300 mt-4">
@@ -160,6 +176,12 @@ function AdminManageEventRegistrations() {
                     onClick={() => handleDeleteRegistration(reg.id)}
                   >
                     {t("remove")}
+                  </button>
+                  <button
+                    className="bg-green-500 text-white px-2 py-1 rounded"
+                    onClick={() => toggleQRVisibility(reg.id)}
+                  >
+                    {visibleQR === reg.id ? t("hide_qr") : t("show_qr")}
                   </button>
                 </td>
               </tr>
