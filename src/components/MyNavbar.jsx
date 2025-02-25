@@ -30,6 +30,7 @@ function MyNavbar() {
           <Link to="/gallery" className="text-[24px] hover:text-gray-300">{t("gallery")}</Link>
           <Link to="/events" className="text-[24px] hover:text-gray-300">{t("events")}</Link>
           <Link to="/register" className="text-[24px] hover:text-gray-300">{t("register")}</Link>
+          <Link to="/qr" className="text-[24px] hover:text-gray-300">QR-Code</Link>
         </div>
 
         {/* Language Selector */}

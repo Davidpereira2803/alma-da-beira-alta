@@ -20,18 +20,27 @@ function AdminManageEventRegistrations() {
     description: "",
     isMember: false,
     qrCodeData: "",
+    password: "",
   });
+
+  const generatePassword = () => {
+    return Math.random().toString(36).slice(-8);
+  };
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  const sendEmailWithQR = async (recipientEmail, qrCodeBase64, name, eventTitle) => {
+  const sendEmailWithQR = async (recipientEmail, qrCodeBase64, name, eventTitle, uniquepassowrd) => {
+    const qrPageLink = `${window.location.origin}/qr`;
+
     const templateParams = {
       to_email: recipientEmail,
       user_name: name,
       event_title: eventTitle,
       qr_code_attachment: qrCodeBase64,
+      qr_page_link: qrPageLink,
+      password: uniquepassowrd,
     };
   
     try {
@@ -61,45 +70,51 @@ function AdminManageEventRegistrations() {
     setRegistrations(registrationsList);
   };
 
-  const handleAddOrUpdateRegistration = async (e) => {
-    e.preventDefault();
-    if (!selectedEvent || !newRegistration.name || !newRegistration.email || !newRegistration.description) return;
+const handleAddOrUpdateRegistration = async (e) => {
+  e.preventDefault();
+  if (!selectedEvent || !newRegistration.name || !newRegistration.description) return; // ✅ Email is now optional
 
-    const qrCodeData = `${newRegistration.name} - ${selectedEvent}`;
+  const qrCodeData = `${newRegistration.name} - ${selectedEvent}`;
+  const password = generatePassword();
 
-    try {
-      const qrCodeUrl = await QRCode.toDataURL(qrCodeData); // ✅ Generate QR code
+  try {
+    const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
 
-      if (editingRegistration) {
-        await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), {
-          ...newRegistration,
-          qrCodeData,
-        });
+    if (editingRegistration) {
+      await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), {
+        ...newRegistration,
+        qrCodeData,
+      });
 
-        setRegistrations(registrations.map((reg) =>
-          reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration, qrCodeData } : reg
-        ));
+      setRegistrations(registrations.map((reg) =>
+        reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration, qrCodeData } : reg
+      ));
 
-        setEditingRegistration(null);
-      } else {
-        const eventRef = collection(db, `events/${selectedEvent}/registrations`);
-        const docRef = await addDoc(eventRef, {
-          ...newRegistration,
-          qrCodeData,
-          arrived: false,
-          paid: false,
-        });
+      setEditingRegistration(null);
+    } else {
+      const eventRef = collection(db, `events/${selectedEvent}/registrations`);
+      const docRef = await addDoc(eventRef, {
+        ...newRegistration,
+        qrCodeData,
+        password, // ✅ Store the password in Firestore
+        arrived: false,
+        paid: false,
+      });
 
-        setRegistrations([...registrations, { id: docRef.id, ...newRegistration, qrCodeData, arrived: false, paid: false }]);
+      setRegistrations([...registrations, { id: docRef.id, ...newRegistration, qrCodeData, arrived: false, paid: false }]);
 
-        sendEmailWithQR(newRegistration.email, qrCodeUrl, newRegistration.name, selectedEvent);
+      // ✅ Only send an email if an email address was provided
+      if (newRegistration.email && newRegistration.email.trim() !== "") {
+        sendEmailWithQR(newRegistration.email, qrCodeUrl, newRegistration.name, selectedEvent, password);
       }
-    } catch (error) {
-      console.error("Error generating QR code:", error);
     }
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+  }
 
-    setNewRegistration({ name: "", email: "", description: "", isMember: false, qrCodeData: "" });
-  };
+  setNewRegistration({ name: "", email: "", description: "", isMember: false, qrCodeData: "" });
+};
+
 
   const handleEditRegistration = (registration) => {
     setNewRegistration(registration);
@@ -157,7 +172,6 @@ function AdminManageEventRegistrations() {
               value={newRegistration.email}
               onChange={(e) => setNewRegistration({ ...newRegistration, email: e.target.value })}
               className="w-full p-2 border rounded"
-              required
             />
           </div>
 
