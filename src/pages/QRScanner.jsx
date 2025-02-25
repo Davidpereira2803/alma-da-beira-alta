@@ -4,18 +4,38 @@ import { doc, getDoc, collection, query, where, getDocs } from "firebase/firesto
 import { db } from "../firebase";
 import { useTranslation } from "react-i18next";
 
-
 const QRScanner = () => {
   const { t } = useTranslation();
-
   const [scanResult, setScanResult] = useState(null);
   const [error, setError] = useState(null);
   const [scanner, setScanner] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [selectedEventTitle, setSelectedEventTitle] = useState("");
 
   useEffect(() => {
+    fetchEvents();
     initializeScanner();
     return () => scanner?.clear();
   }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "events"));
+      const eventList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        title: doc.data().title,
+      }));
+      setEvents(eventList);
+      if (eventList.length > 0) {
+        setSelectedEvent(eventList[0].id);
+        setSelectedEventTitle(eventList[0].title);
+      }
+    } catch (err) {
+      console.error("Error fetching events:", err);
+      setError("Could not fetch events.");
+    }
+  };
 
   const initializeScanner = () => {
     const newScanner = new Html5QrcodeScanner("reader", {
@@ -35,6 +55,16 @@ const QRScanner = () => {
             return;
           }
 
+          // Ensure the scanned event matches the selected event
+          if (eventId !== selectedEvent) {
+            setError("Scanned QR code is not for the selected event.");
+            return;
+          }
+
+          // Fetch event title from Firestore
+          const eventDoc = await getDoc(doc(db, "events", eventId));
+          const eventTitle = eventDoc.exists() ? eventDoc.data().title : "Unknown Event";
+
           const eventRef = collection(db, `events/${eventId}/registrations`);
           const q = query(eventRef, where("name", "==", name));
           const querySnapshot = await getDocs(q);
@@ -44,7 +74,8 @@ const QRScanner = () => {
             setScanResult({
               id: docSnap.id,
               name: docSnap.data().name,
-              event: eventId,
+              eventId: eventId,
+              eventTitle: eventTitle, // Add event title
               status: "Registered",
             });
           } else {
@@ -72,6 +103,27 @@ const QRScanner = () => {
   return (
     <div className="flex flex-col items-center p-4">
       <h2 className="text-xl font-bold mb-4">Event Check-in - QR Scanner</h2>
+
+      {/* Event Selection Dropdown */}
+      <div className="mb-4 w-full max-w-md">
+        <label className="block text-gray-700">{t("select_event")}</label>
+        <select
+          className="w-full p-2 border rounded"
+          value={selectedEvent}
+          onChange={(e) => {
+            setSelectedEvent(e.target.value);
+            const selected = events.find((event) => event.id === e.target.value);
+            setSelectedEventTitle(selected ? selected.title : "Unknown Event");
+          }}
+        >
+          {events.map((event) => (
+            <option key={event.id} value={event.id}>
+              {event.title}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div id="reader" className="w-full max-w-md"></div>
 
       {error && <p className="text-red-500">{error}</p>}
@@ -82,7 +134,8 @@ const QRScanner = () => {
             {scanResult.status === "Registered" ? (
               <>
                 <p><strong>Name:</strong> {scanResult.name}</p>
-                <p><strong>Event:</strong> {scanResult.event}</p>
+                <p><strong>Event Title:</strong> {scanResult.eventTitle}</p> {/* Show event title */}
+                <p><strong>Event ID:</strong> {scanResult.eventId}</p>
                 <p className="text-green-500 font-bold">✅ {scanResult.status}</p>
               </>
             ) : (
@@ -94,7 +147,7 @@ const QRScanner = () => {
       <button onClick={resetScanner} className="mt-4 bg-gray-700 text-white px-4 py-2 rounded">Reset Scanner</button>
       <button
         onClick={() => window.history.back()}
-        className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+        className="mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
       >
         {t("back_to_admin_panel")}
       </button>
