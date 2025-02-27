@@ -35,7 +35,7 @@ function Login() {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center my-80">
         <div className="bg-white p-6 rounded-lg shadow-lg w-3/5">
           <h2 className="text-2xl font-bold text-center mb-4">{t("admin_login")}</h2>
 
