@@ -75,15 +75,6 @@ function Login() {
               {t("forgot_password")}
             </button>
           </form>
-
-          {/* Google Login Button */}
-          <button
-            onClick={handleGoogleLogin}
-            className="w-full bg-gray-800 text-white py-2 rounded-lg mt-4 hover:bg-gray-900 transition flex justify-center items-center"
-          >
-          <img src="/google-logo.png" alt="Google Logo" className="w-5 h-5 mr-2" />
-            {t("login_with_google")}
-          </button>
         </div>
       </div>
     </div>
