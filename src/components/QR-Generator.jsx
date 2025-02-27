@@ -10,16 +10,14 @@ const QRCodeGenerator = ({ text }) => {
       return;
     }
 
-    // Generate the QR Code based on the received text
     QRCode.toDataURL(text)
       .then((url) => setQrCodeUrl(url))
       .catch((err) => console.error("Error generating QR Code:", err));
-  }, [text]); // Regenerate QR Code when `text` changes
+  }, [text]);
 
   return (
     <div className="flex flex-col items-center p-4">
       
-      {/* Display the QR Code only if there's valid data */}
       {qrCodeUrl ? (
         <div className="mt-4">
           <h3 className="text-lg font-bold">Generated QR Code:</h3>

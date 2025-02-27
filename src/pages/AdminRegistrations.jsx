@@ -74,7 +74,6 @@ function AdminRegistrations() {
           {t("pending_registrations")}
         </h2>
 
-        {/* Registrations Table */}
         <div className="overflow-x-auto">
           <table className="w-full border-collapse border border-gray-300">
             <thead>
@@ -113,7 +112,6 @@ function AdminRegistrations() {
           </table>
         </div>
 
-        {/* Register Member & Back Button */}
         <div className="mt-4 space-y-2">
           <a href="/admin/register" className="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
             {t("register_member")}

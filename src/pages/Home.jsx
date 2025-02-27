@@ -48,12 +48,10 @@ function Home() {
 
     <div className="w-full">
 
-      {/* Image Section */}
       <div className="flex justify-center items-center px-4 my-5">
         <img src={ im } alt="Alma da Beira Alta" className="w-4/5 md:w-4/5 h-[40vh] md:h-[50vh] object-cover rounded-lg" />
       </div>
 
-      {/* Who We Are Section */}
       <div className="flex justify-center items-center px-4 my-5">
         <div className="bg-[#B6AA84] text-black py-5 rounded-lg w-4/5 text-center">
           <h2 className="text-2xl font-bold my-3">{t("who_we_are")}</h2>
@@ -70,7 +68,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Latest Gallery Section */}
       <div className="flex justify-center  my-5 px-4">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("latest_gallery")}</h3>
@@ -84,7 +81,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Upcoming Event Section */}
       <div className="flex justify-center px-4 my-5">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("upcoming_event")}</h3>
@@ -134,7 +130,6 @@ function Home() {
         </div>
       </div>
 
-      {/* YouTube Video Section */}
       <div className="flex justify-center my-5 px-4">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("watch_our_video")}</h3>
@@ -147,7 +142,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Join Us Section */}
       <div className="flex justify-center text-center my-5 px-4">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("join_us")}</h3>
@@ -158,7 +152,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Contact Section */}
       <div className="flex justify-center text-center my-5 px-4">
         <div className="bg-[#B6AA84] text-black p-6 rounded-lg w-4/5">
           <h3 className="text-xl font-bold my-3">{t("contact")}</h3>

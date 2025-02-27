@@ -26,7 +26,6 @@ function Events() {
     fetchEvents();
   }, []);
 
-  // ✅ Open PDF in Google Docs Viewer
   const handleViewPdf = (pdfUrl) => {
     setSelectedPdf(`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfUrl)}`);
     setShowModal(true);
@@ -55,7 +54,6 @@ function Events() {
                 <p className="text-sm">{t("event_location")}: {event.location}</p>
                 <p className="mt-2">{event.description}</p>
 
-                {/* ✅ View & Download Buttons */}
                 {event.pdfUrl && (
                   <div className="flex gap-3 mt-3">
                     <button
@@ -100,7 +98,6 @@ function Events() {
                 <p className="text-sm">{t("event_location")}: {event.location}</p>
                 <p className="mt-2">{event.description}</p>
 
-                {/* ✅ View & Download Buttons */}
                 {event.pdfUrl && (
                   <div className="flex gap-3 mt-3">
                     <button
@@ -124,7 +121,6 @@ function Events() {
         </div>
       )}
 
-      {/* ✅ Modal for Viewing PDFs using Google Docs */}
       {showModal && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">

@@ -55,13 +55,11 @@ const QRScanner = () => {
             return;
           }
 
-          // Ensure the scanned event matches the selected event
           if (eventId !== selectedEvent) {
             setError("Scanned QR code is not for the selected event.");
             return;
           }
 
-          // Fetch event title from Firestore
           const eventDoc = await getDoc(doc(db, "events", eventId));
           const eventTitle = eventDoc.exists() ? eventDoc.data().title : "Unknown Event";
 
@@ -75,7 +73,7 @@ const QRScanner = () => {
               id: docSnap.id,
               name: docSnap.data().name,
               eventId: eventId,
-              eventTitle: eventTitle, // Add event title
+              eventTitle: eventTitle,
               status: "Registered",
             });
           } else {

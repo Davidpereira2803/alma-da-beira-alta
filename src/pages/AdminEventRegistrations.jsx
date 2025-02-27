@@ -9,7 +9,7 @@ function AdminEventRegistrations() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventPrices, setEventPrices] = useState({ memberPrice: 0, regularPrice: 0 });
   const [registrations, setRegistrations] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // <-- New state for search
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchEvents();
@@ -51,13 +51,11 @@ function AdminEventRegistrations() {
 
   const filteredRegistrations = registrations
     .sort((a, b) => {
-      // Move matching search results to the top
       const aMatches = a.name.toLowerCase().includes(searchQuery.toLowerCase());
       const bMatches = b.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return bMatches - aMatches; // true is 1, false is 0, so true moves up
+      return bMatches - aMatches;
     });
 
-  // Calculate total revenue from paid attendees
   const totalRevenue = registrations
     .filter((reg) => reg.paid)
     .reduce((sum, reg) => sum + Number(reg.isMember ? eventPrices.memberPrice : eventPrices.regularPrice), 0);
@@ -66,7 +64,6 @@ function AdminEventRegistrations() {
     <div className="max-w-5xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("event_registrations")}</h2>
 
-      {/* Event Selection */}
       <div className="mb-4">
         <label className="block text-gray-700">{t("select_event")}</label>
         <select
@@ -81,7 +78,6 @@ function AdminEventRegistrations() {
         </select>
       </div>
 
-      {/* Search Bar */}
       <div className="mb-4">
         <input
           type="text"
@@ -92,7 +88,6 @@ function AdminEventRegistrations() {
         />
       </div>
 
-      {/* Registrations Table */}
       {selectedEvent && (
         <table className="w-full border-collapse border border-gray-300 mt-4">
           <thead>
@@ -134,7 +129,6 @@ function AdminEventRegistrations() {
                 </tr>
               );
             })}
-            {/* Total Count & Revenue Row */}
             <tr className="bg-gray-100 text-center font-bold">
               <td className="border p-2" colSpan="3">{t("total_people")}</td>
               <td className="border p-2" colSpan="1">€{totalRevenue}</td>

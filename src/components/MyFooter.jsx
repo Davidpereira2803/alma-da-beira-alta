@@ -13,7 +13,6 @@ function MyFooter() {
         <p>© {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg</p>
         <p className="text-xs my-3 text-black">Developed & Maintained by David Pereira de Magalhaes</p>
 
-        {/* Show Admin Panel button only if admin is logged in */}
         {user && user.email === adminEmail && (
           <Link to="/admin">
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-2">
@@ -22,7 +21,6 @@ function MyFooter() {
           </Link>
         )}
 
-        {/* Always show "Admin Login" button if the user is NOT logged in */}
         <Link to="/login">
           <button className="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-lg mt-2 ml-3 text-xs">
             {t("admin_login")}

@@ -45,10 +45,10 @@ function AdminManageEventRegistrations() {
   
     try {
       const response = await emailjs.send(
-        "service_qsmqp31",
-        "template_km54l2i",
+        import.meta.env.VITE_EMAIL_SERVICE,
+        import.meta.env.VITE_EMAIL_TEMPLATE2,
         templateParams,
-        "LEBUL4PrsR_E_xCsB"
+        import.meta.env.VITE_EMAIL_PUBLIC
       );
       console.log("Email sent successfully!", response.status, response.text);
     } catch (error) {
@@ -72,7 +72,7 @@ function AdminManageEventRegistrations() {
 
 const handleAddOrUpdateRegistration = async (e) => {
   e.preventDefault();
-  if (!selectedEvent || !newRegistration.name || !newRegistration.description) return; // ✅ Email is now optional
+  if (!selectedEvent || !newRegistration.name || !newRegistration.description) return;
 
   const qrCodeData = `${newRegistration.name} - ${selectedEvent}`;
   const password = generatePassword();
@@ -96,14 +96,13 @@ const handleAddOrUpdateRegistration = async (e) => {
       const docRef = await addDoc(eventRef, {
         ...newRegistration,
         qrCodeData,
-        password, // ✅ Store the password in Firestore
+        password,
         arrived: false,
         paid: false,
       });
 
       setRegistrations([...registrations, { id: docRef.id, ...newRegistration, qrCodeData, arrived: false, paid: false }]);
 
-      // ✅ Only send an email if an email address was provided
       if (newRegistration.email && newRegistration.email.trim() !== "") {
         sendEmailWithQR(newRegistration.email, qrCodeUrl, newRegistration.name, selectedEvent, password);
       }
@@ -134,7 +133,6 @@ const handleAddOrUpdateRegistration = async (e) => {
     <div className="max-w-5xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("manage_event_registrations")}</h2>
 
-      {/* Event Selection */}
       <div className="mb-4">
         <label className="block text-gray-700">{t("select_event")}</label>
         <select
@@ -149,7 +147,6 @@ const handleAddOrUpdateRegistration = async (e) => {
         </select>
       </div>
 
-      {/* Add/Edit Registration Form */}
       {selectedEvent && (
         <form onSubmit={handleAddOrUpdateRegistration} className="mt-4 p-4 bg-white shadow-lg rounded-lg">
           <h3 className="text-lg font-bold mb-2">{editingRegistration ? t("edit_registration") : t("add_registration")}</h3>
@@ -186,7 +183,6 @@ const handleAddOrUpdateRegistration = async (e) => {
             />
           </div>
 
-          {/* Membership Checkbox */}
           <div className="mb-2 flex items-center">
             <input
               type="checkbox"
@@ -203,14 +199,12 @@ const handleAddOrUpdateRegistration = async (e) => {
         </form>
       )}
 
-      {/* Display QR Code when "Show QR" is clicked */}
       {visibleQR && (
         <div className="mt-4 text-center">
           <QRCodeGenerator text={registrations.find((reg) => reg.id === visibleQR)?.qrCodeData || ""} />
         </div>
       )}
 
-      {/* Registrations List */}
       {selectedEvent && (
         <table className="w-full border-collapse border border-gray-300 mt-4">
           <thead>
@@ -249,7 +243,6 @@ const handleAddOrUpdateRegistration = async (e) => {
                 </td>
               </tr>
             ))}
-            {/* Total Count Row */}
             <tr className="bg-gray-100 text-center font-bold">
               <td className="border p-2" colSpan="2">{t("total_people")}</td>
               <td className="border p-2">{registrations.length}</td>

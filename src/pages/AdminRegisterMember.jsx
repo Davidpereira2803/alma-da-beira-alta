@@ -32,11 +32,9 @@ function AdminRegisterMember() {
     try {
       const membersRef = collection(db, "registrations");
 
-      // Query for email
       const emailQuery = query(membersRef, where("email", "==", formData.email));
       const emailSnapshot = await getDocs(emailQuery);
 
-      // Query for phone
       const phoneQuery = query(membersRef, where("phone", "==", formData.phone));
       const phoneSnapshot = await getDocs(phoneQuery);
 
@@ -63,11 +61,9 @@ function AdminRegisterMember() {
         </h2>
         <p className="text-center text-gray-600 mb-4">{t("register_member_instruction")}</p>
 
-        {/* Success & Error Messages */}
         {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center">{success}</p>}
         {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center">{error}</p>}
 
-        {/* Registration Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 font-medium">{t("name")}</label>
@@ -136,7 +132,6 @@ function AdminRegisterMember() {
           </button>
         </form>
 
-        {/* Back to Admin Panel */}
         <button
           className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
           onClick={() => window.history.back()}

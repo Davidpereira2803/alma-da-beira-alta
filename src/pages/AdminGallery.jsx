@@ -21,7 +21,6 @@ function AdminGallery() {
     setImages(imageList);
   };
 
-  // Convert GitHub URLs to raw URLs
   const convertToRawGitHubUrl = (url) => {
     if (url.includes("github.com") && url.includes("/blob/")) {
       return url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
@@ -51,7 +50,6 @@ function AdminGallery() {
           {t("manage_gallery")}
         </h2>
 
-        {/* Image Input Field */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">
             {t("image_url")}
@@ -65,7 +63,6 @@ function AdminGallery() {
           />
         </div>
 
-        {/* Add Image Button */}
         <button
           className="w-full bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition duration-300 mb-3"
           onClick={handleAddImage}
@@ -73,7 +70,6 @@ function AdminGallery() {
           {t("add_image")}
         </button>
 
-        {/* Gallery Section */}
         <h3 className="text-xl font-semibold text-center mt-4">
           {t("gallery_images")}
         </h3>
@@ -93,7 +89,6 @@ function AdminGallery() {
           ))}
         </div>
 
-        {/* Back Button */}
         <button
           onClick={() => window.history.back()}
           className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
