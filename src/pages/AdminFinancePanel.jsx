@@ -49,14 +49,12 @@ function FinancePanel() {
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("finance_panel")}</h2>
 
-      {/* Summary Section */}
       <div className="flex justify-between bg-gray-100 p-4 rounded-lg mb-4">
         <p className="text-green-600 font-bold">{t("total_income")}: €{transactions.filter(t => t.type === "income").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
         <p className="text-red-600 font-bold">{t("total_expenses")}: €{transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
         <p className="font-bold">{t("balance")}: €{transactions.reduce((sum, t) => t.type === "income" ? sum + Number(t.amount) : sum - Number(t.amount), 0)}</p>
       </div>
 
-      {/* Transaction Table */}
       <table className="w-full border border-gray-300" style={{ borderCollapse: "collapse" }}>
         <thead>
           <tr className="bg-gray-200">
@@ -87,7 +85,6 @@ function FinancePanel() {
         </tbody>
       </table>
 
-      {/* Add/Edit Transaction Form */}
       <form onSubmit={handleAddTransaction} className="mt-6 p-4 bg-white shadow-lg rounded-lg">
         <h3 className="text-lg font-bold mb-2">{editingTransaction ? t("edit_transaction") : t("add_transaction")}</h3>
         

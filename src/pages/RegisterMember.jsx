@@ -33,11 +33,9 @@ function RegisterMember() {
     try {
       const membersRef = collection(db, "registrations");
 
-      // Query for email
       const emailQuery = query(membersRef, where("email", "==", formData.email));
       const emailSnapshot = await getDocs(emailQuery);
 
-      // Query for phone
       const phoneQuery = query(membersRef, where("phone", "==", formData.phone));
       const phoneSnapshot = await getDocs(phoneQuery);
 
@@ -46,21 +44,19 @@ function RegisterMember() {
         return;
       }
 
-      // If no duplicate, proceed with registration
       await addDoc(membersRef, formData);
 
-      // ✅ Send confirmation email via EmailJS
       const templateParams = {
         name: formData.name,
-        email: formData.email, // Member's email
+        email: formData.email,
         message: t("email_confirmation_message", { name: formData.name }),
       };
 
       await emailjs.send(
-        "service_qsmqp31", // 🔹 Replace with your EmailJS Service ID
-        "template_ignuqdg", // 🔹 Replace with your EmailJS Template ID
+        import.meta.env.VITE_EMAIL_SERVICE,
+        import.meta.env.VITE_EMAIL_TEMPLATE,
         templateParams,
-        "LEBUL4PrsR_E_xCsB" // 🔹 Replace with your EmailJS Public Key
+        import.meta.env.VITE_EMAIL_PUBLIC
       );
 
       setSuccess(t("registration_successful"));
@@ -79,11 +75,9 @@ function RegisterMember() {
         </h2>
         <p className="text-center text-gray-600 mb-4">{t("register_member_instruction")}</p>
 
-        {/* Success & Error Messages */}
         {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center">{success}</p>}
         {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center">{error}</p>}
 
-        {/* Registration Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 font-medium">{t("name")}</label>

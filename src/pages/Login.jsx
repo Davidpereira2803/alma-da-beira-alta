@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { login, googleLogin } = useAuth(); // Import googleLogin
+  const { login, googleLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,7 +27,7 @@ function Login() {
     setError(null);
     try {
       await googleLogin();
-      navigate("/admin"); // Redirect after successful login
+      navigate("/admin");
     } catch (err) {
       setError(t("google_login_failed"));
     }

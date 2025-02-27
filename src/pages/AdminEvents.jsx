@@ -41,12 +41,10 @@ function AdminEvents() {
 
     try {
       if (editingEvent) {
-        // Update existing event
         await updateDoc(doc(db, "events", editingEvent.id), newEvent);
         setEvents(events.map((event) => (event.id === editingEvent.id ? { id: event.id, ...newEvent } : event)));
         setEditingEvent(null);
       } else {
-        // Add new event
         const docRef = await addDoc(collection(db, "events"), newEvent);
         setEvents([...events, { id: docRef.id, ...newEvent }]);
       }

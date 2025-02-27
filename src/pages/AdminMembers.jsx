@@ -23,7 +23,6 @@ function AdminMembers() {
     fetchMembers();
   }, []);
 
-  // Delete Member Function
   const handleDelete = async (id) => {
     if (window.confirm(t("confirm_delete_member"))) {
       await deleteDoc(doc(db, "members", id));
@@ -31,7 +30,6 @@ function AdminMembers() {
     }
   };
 
-  // Mark as Processed Function
   const handleMarkProcessed = async (id) => {
     const memberRef = doc(db, "members", id);
     await updateDoc(memberRef, { processed: true });
@@ -41,7 +39,6 @@ function AdminMembers() {
     ));
   };
 
-  // Open Edit Modal
   const handleEdit = (member) => {
     setSelectedMember(member);
     setUpdatedData({
@@ -53,7 +50,6 @@ function AdminMembers() {
     setShowEditModal(true);
   };
 
-  // Save Edited Member
   const handleSaveEdit = async () => {
     if (!selectedMember) return;
 
@@ -72,7 +68,6 @@ function AdminMembers() {
       <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">{t("registered_members")}</h2>
 
-        {/* Members Table */}
         <div className="overflow-x-auto">
           <table className="w-full border-collapse border border-gray-300">
             <thead>
@@ -124,7 +119,6 @@ function AdminMembers() {
                 </tr>
               ))}
             </tbody>
-            {/* Footer Row: Display Total Members */}
             <tfoot>
               <tr className="bg-gray-200">
                 <td colSpan="7" className="border p-2 font-semibold text-gray-800">
@@ -136,7 +130,6 @@ function AdminMembers() {
           </table>
         </div>
 
-        {/* Back Button */}
         <button
           className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
           onClick={() => window.history.back()}
@@ -144,7 +137,6 @@ function AdminMembers() {
           {t("back_to_admin_panel")}
         </button>
 
-        {/* Edit Member Modal */}
         {showEditModal && (
           <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">

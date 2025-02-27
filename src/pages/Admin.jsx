@@ -15,10 +15,8 @@ function Admin() {
   return (
     <div className="flex justify-center items-center bg-[#B6AA84] p-6 my-80">
       
-      {/* Admin Panel Container with 2 Columns */}
       <div className="grid grid-cols-2 gap-6 max-w-4xl w-full">
 
-        {/* Finance Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("finance")}</h2>
 
@@ -30,7 +28,6 @@ function Admin() {
           </button>
         </div>
 
-        {/* Gallery Management Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("gallery_management")}</h2>
 
@@ -42,7 +39,6 @@ function Admin() {
           </button>
         </div>
 
-        {/* Events Management Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("events_management")}</h2>
 
@@ -68,9 +64,6 @@ function Admin() {
           </button>
         </div>
 
-
-
-        {/* General Management Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("general_management")}</h2>
 
@@ -93,6 +86,13 @@ function Admin() {
             onClick={handleLogout}
           >
             {t("admin_logout")}
+          </button>
+
+          <button 
+            className="w-full bg-red-600 text-white py-2 rounded-lg shadow-md hover:bg-red-700 transition duration-300 mt-3"
+            onClick={() => navigate("/admin/qr-scanner")}
+          >
+            {t("QR-Scanner")}
           </button>
         </div>
 
