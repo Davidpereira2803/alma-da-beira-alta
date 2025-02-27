@@ -15,7 +15,7 @@
 
 ---
 
-## 🎨 **Technology Stack**
+## **Technology Stack**
 - ⚡ **React (Vite)**
 - 🔥 **Firebase (Auth, Firestore, Hosting)**
 - 🎨 **Bootstrap**
