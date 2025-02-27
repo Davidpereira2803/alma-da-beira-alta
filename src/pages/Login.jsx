@@ -75,7 +75,6 @@ function Login() {
               {t("forgot_password")}
             </button>
           </form>
-
         </div>
       </div>
     </div>
