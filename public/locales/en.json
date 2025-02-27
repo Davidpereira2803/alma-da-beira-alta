@@ -132,5 +132,8 @@
     "add_person": "Add Person",
     "member_price": "Member Price",
     "regular_price": "Regular Price",
-    "location": "Location"
+    "location": "Location",
+    "QR-Scanner": "QR-Scanner",
+    "show_qr": "Show QR-Code",
+    "hide_qr": "Hide QR-Code"
     }
