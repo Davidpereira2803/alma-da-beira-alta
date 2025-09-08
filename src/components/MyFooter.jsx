@@ -8,24 +8,28 @@ function MyFooter() {
   const adminEmail = "admin@example.com";
 
   return (
-    <footer className="bg-[#B6AA84] text-black text-center py-4 mt-auto">
-      <div className="container mx-auto">
-        <p>© {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg</p>
-        <p className="text-xs my-3 text-black">Developed & Maintained by David Pereira de Magalhaes</p>
-
-        {user && user.email === adminEmail && (
-          <Link to="/admin">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-2">
-              {t("admin_panel")}
+    <footer className="bg-[#B6AA84] text-black py-6 mt-auto shadow-inner">
+      <div className="max-w-2xl mx-auto flex flex-col items-center gap-2">
+        <p className="text-base font-serif font-semibold">
+          © {new Date().getFullYear()} Alma Da Beira Alta - Luxembourg
+        </p>
+        <p className="text-xs text-gray-700 mb-2">
+          Developed & Maintained by David Pereira de Magalhaes
+        </p>
+        <div className="flex flex-wrap gap-3 mt-2">
+          {user && user.email === adminEmail && (
+            <Link to="/admin">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm shadow transition">
+                {t("admin_panel")}
+              </button>
+            </Link>
+          )}
+          <Link to="/login">
+            <button className="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-lg text-xs shadow transition">
+              {t("admin_login")}
             </button>
           </Link>
-        )}
-
-        <Link to="/login">
-          <button className="bg-stone-800 hover:bg-stone-700 text-white px-4 py-2 rounded-lg mt-2 ml-3 text-xs">
-            {t("admin_login")}
-          </button>
-        </Link>
+        </div>
       </div>
     </footer>
   );
