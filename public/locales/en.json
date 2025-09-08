@@ -1,8 +1,8 @@
 {
     "title": "Alma Da Beira Alta",
     "welcome": "Welcome to Alma Da Beira Alta",
-    "events": "Upcoming Events",
-    "gallery": "Photo Gallery",
+    "events": "Events",
+    "gallery": "Gallery",
     "contact": "Contact Us",
     "admin_panel": "Admin Panel",
     "view_brochure": "📄 View Brochure",
@@ -135,5 +135,8 @@
     "location": "Location",
     "QR-Scanner": "QR-Scanner",
     "show_qr": "Show QR-Code",
-    "hide_qr": "Hide QR-Code"
-    }
+    "hide_qr": "Hide QR-Code",
+    "homepage_intro": "Preserving Portuguese folklore through dance, music, and stories.",
+    "learn_more": "Learn More",
+    "upcoming_events": "Upcoming Events"
+}

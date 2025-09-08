@@ -70,79 +70,79 @@ function RegisterMember() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] bg-[#B6AA84] px-4 py-10">
-      <div className="w-full max-w-lg bg-white shadow-lg rounded-xl p-8">
-        <h2 className="text-3xl font-serif font-bold text-center text-gray-800 mb-2">
+    <div className="flex justify-center items-center min-h-[80vh] bg-[#F1F0E4] px-4 py-10">
+      <div className="w-full max-w-lg bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl p-8">
+        <h2 className="text-3xl font-serif font-bold text-center text-[#3E3F29] mb-2">
           {t("register_member")}
         </h2>
-        <p className="text-center text-gray-600 mb-4">{t("register_member_instruction")}</p>
+        <p className="text-center text-[#7D8D86] mb-4">{t("register_member_instruction")}</p>
 
         {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center mb-2">{success}</p>}
         {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center mb-2">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-medium mb-1">{t("name")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("name")}</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#B6AA84]"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">{t("email")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("email")}</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#B6AA84]"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">{t("phone")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")}</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#B6AA84]"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">{t("address")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("address")}</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#B6AA84]"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">{t("additional_message")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("additional_message")}</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#B6AA84]"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               rows="3"
             ></textarea>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#8C7B4F] text-white py-2 rounded-lg font-semibold hover:bg-[#B6AA84] transition"
+            className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
           >
             {t("submit")}
           </button>
