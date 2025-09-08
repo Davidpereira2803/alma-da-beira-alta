@@ -6,17 +6,18 @@ import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Admin from "./pages/Admin";
-import AdminEvents from "./pages/AdminEvents";
-import AdminGallery from "./pages/AdminGallery";
+import AdminProtectedRoute from "./components/admin/AdminProtectedRoute";
+import Admin from "./pages/admin/Admin";
+import AdminEvents from "./pages/admin/AdminEvents";
+import AdminGallery from "./pages/admin/AdminGallery";
 import RegisterMember from "./pages/RegisterMember";
-import AdminMembers from "./pages/AdminMembers";
-import AdminRegistrations from "./pages/AdminRegistrations";
-import AdminRegisterMember from "./pages/AdminRegisterMember";
+import AdminMembers from "./pages/admin/AdminMembers";
+import AdminRegistrations from "./pages/admin/AdminRegistrations";
+import AdminRegisterMember from "./pages/admin/AdminRegisterMember";
 import ForgotPassword from "./pages/ForgotPassword";
-import AdminFinancePanel from "./pages/AdminFinancePanel";
-import AdminEventRegistrations from "./pages/AdminEventRegistrations";
-import AdminManageEventRegistrations from "./pages/AdminManageEventRegistrations";
+import AdminFinancePanel from "./pages/admin/AdminFinancePanel";
+import AdminEventRegistrations from "./pages/admin/AdminEventRegistrations";
+import AdminManageEventRegistrations from "./pages/admin/AdminManageEventRegistrations";
 import QRScanner from "./pages/QRScanner";
 import QRPage from "./pages/QRPage";
 
@@ -36,16 +37,16 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/qr" element={<QRPage />} />
 
-            <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} />
-            <Route path="/admin/registrations" element={<ProtectedRoute><AdminRegistrations /></ProtectedRoute>} />
-            <Route path="/admin/register" element={<ProtectedRoute><AdminRegisterMember /></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-            <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
-            <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
-            <Route path="/admin/finance" element={<ProtectedRoute><AdminFinancePanel /></ProtectedRoute>} />
-            <Route path="/admin/event-registrations" element={<ProtectedRoute><AdminEventRegistrations /></ProtectedRoute>} />
-            <Route path="/admin/manage-event-registrations" element={<ProtectedRoute><AdminManageEventRegistrations /></ProtectedRoute>} />
-            <Route path="/admin/qr-scanner" element={<ProtectedRoute><QRScanner /></ProtectedRoute>} />
+            <Route path="/admin/members" element={<AdminProtectedRoute><AdminMembers /></AdminProtectedRoute>} />
+            <Route path="/admin/registrations" element={<AdminProtectedRoute><AdminRegistrations /></AdminProtectedRoute>} />
+            <Route path="/admin/register" element={<AdminProtectedRoute><AdminRegisterMember /></AdminProtectedRoute>} />
+            <Route path="/admin" element={<AdminProtectedRoute><Admin /></AdminProtectedRoute>} />
+            <Route path="/admin/events" element={<AdminProtectedRoute><AdminEvents /></AdminProtectedRoute>} />
+            <Route path="/admin/gallery" element={<AdminProtectedRoute><AdminGallery /></AdminProtectedRoute>} />
+            <Route path="/admin/finance" element={<AdminProtectedRoute><AdminFinancePanel /></AdminProtectedRoute>} />
+            <Route path="/admin/event-registrations" element={<AdminProtectedRoute><AdminEventRegistrations /></AdminProtectedRoute>} />
+            <Route path="/admin/manage-event-registrations" element={<AdminProtectedRoute><AdminManageEventRegistrations /></AdminProtectedRoute>} />
+            <Route path="/admin/qr-scanner" element={<AdminProtectedRoute><QRScanner /></AdminProtectedRoute>} />
           </Routes>
         </main>
 

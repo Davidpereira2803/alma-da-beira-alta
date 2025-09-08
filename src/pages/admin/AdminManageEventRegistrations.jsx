@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, doc, getDocs, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
-import QRCodeGenerator from "../components/QR-Generator";
+import QRCodeGenerator from "../../components/QR-Generator";
 import emailjs from "@emailjs/browser";
 import QRCode from "qrcode";
 
