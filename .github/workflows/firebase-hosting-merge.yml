@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
-      - main  # Change this if your deployment branch is different
+      - main
 
 jobs:
   build_and_deploy:
@@ -14,7 +14,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Adjust to your required Node.js version
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
