@@ -46,82 +46,86 @@ function FinancePanel() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("finance_panel")}</h2>
+    <div className="bg-[#F1F0E4] min-h-screen py-10">
+      <div className="max-w-4xl mx-auto p-6 bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl">
+        <h2 className="text-2xl font-serif font-bold text-[#3E3F29] mb-4">{t("finance_panel")}</h2>
 
-      <div className="flex justify-between bg-gray-100 p-4 rounded-lg mb-4">
-        <p className="text-green-600 font-bold">{t("total_income")}: €{transactions.filter(t => t.type === "income").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
-        <p className="text-red-600 font-bold">{t("total_expenses")}: €{transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
-        <p className="font-bold">{t("balance")}: €{transactions.reduce((sum, t) => t.type === "income" ? sum + Number(t.amount) : sum - Number(t.amount), 0)}</p>
-      </div>
-
-      <table className="w-full border border-gray-300" style={{ borderCollapse: "collapse" }}>
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 border border-gray-300">{t("date")}</th>
-            <th className="p-2 border border-gray-300">{t("description")}</th>
-            <th className="p-2 border border-gray-300">{t("amount")}</th>
-            <th className="p-2 border border-gray-300">{t("type")}</th>
-            <th className="p-2 border border-gray-300">{t("actions")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.id} className={transaction.type === "income" ? "bg-green-100" : "bg-red-100"}>
-              <td className="p-2 border border-gray-300">{transaction.date}</td>
-              <td className="p-2 border border-gray-300">{transaction.description}</td>
-              <td className="p-2 border border-gray-300">€{transaction.amount}</td>
-              <td className="p-2 border border-gray-300">{t(transaction.type)}</td>
-              <td className="p-2 border border-gray-300 flex space-x-2">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded" onClick={() => handleEditTransaction(transaction)}>
-                  {t("edit")}
-                </button>
-                <button className="bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDeleteTransaction(transaction.id)}>
-                  {t("delete")}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <form onSubmit={handleAddTransaction} className="mt-6 p-4 bg-white shadow-lg rounded-lg">
-        <h3 className="text-lg font-bold mb-2">{editingTransaction ? t("edit_transaction") : t("add_transaction")}</h3>
-        
-        <div className="mb-2">
-          <label className="block">{t("date")}</label>
-          <input type="date" value={newTransaction.date} onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })} className="w-full p-2 border rounded" required />
+        <div className="flex flex-col md:flex-row justify-between bg-[#7D8D86] p-4 rounded-lg mb-4 gap-2">
+          <p className="text-green-700 font-bold">{t("total_income")}: €{transactions.filter(t => t.type === "income").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
+          <p className="text-red-700 font-bold">{t("total_expenses")}: €{transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + Number(t.amount), 0)}</p>
+          <p className="font-bold text-[#3E3F29]">{t("balance")}: €{transactions.reduce((sum, t) => t.type === "income" ? sum + Number(t.amount) : sum - Number(t.amount), 0)}</p>
         </div>
 
-        <div className="mb-2">
-          <label className="block">{t("description")}</label>
-          <input type="text" value={newTransaction.description} onChange={(e) => setNewTransaction({ ...newTransaction, description: e.target.value })} className="w-full p-2 border rounded" required />
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-[#BCA88D] rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-[#7D8D86] text-[#3E3F29]">
+                <th className="p-2 border border-[#BCA88D]">{t("date")}</th>
+                <th className="p-2 border border-[#BCA88D]">{t("description")}</th>
+                <th className="p-2 border border-[#BCA88D]">{t("amount")}</th>
+                <th className="p-2 border border-[#BCA88D]">{t("type")}</th>
+                <th className="p-2 border border-[#BCA88D]">{t("actions")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction) => (
+                <tr key={transaction.id} className={transaction.type === "income" ? "bg-green-50" : "bg-red-50"}>
+                  <td className="p-2 border border-[#BCA88D]">{transaction.date}</td>
+                  <td className="p-2 border border-[#BCA88D]">{transaction.description}</td>
+                  <td className="p-2 border border-[#BCA88D]">€{transaction.amount}</td>
+                  <td className="p-2 border border-[#BCA88D]">{t(transaction.type)}</td>
+                  <td className="p-2 border border-[#BCA88D] flex space-x-2 justify-center">
+                    <button className="bg-blue-500 text-white px-2 py-1 rounded font-semibold shadow hover:bg-blue-700 transition" onClick={() => handleEditTransaction(transaction)}>
+                      {t("edit")}
+                    </button>
+                    <button className="bg-red-500 text-white px-2 py-1 rounded font-semibold shadow hover:bg-red-700 transition" onClick={() => handleDeleteTransaction(transaction.id)}>
+                      {t("delete")}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <div className="mb-2">
-          <label className="block">{t("amount")}</label>
-          <input type="number" value={newTransaction.amount} onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })} className="w-full p-2 border rounded" required />
-        </div>
+        <form onSubmit={handleAddTransaction} className="mt-6 p-4 bg-[#7D8D86] shadow-lg rounded-lg">
+          <h3 className="text-lg font-bold mb-2 text-[#3E3F29]">{editingTransaction ? t("edit_transaction") : t("add_transaction")}</h3>
+          
+          <div className="mb-2">
+            <label className="block text-[#3E3F29] font-medium">{t("date")}</label>
+            <input type="date" value={newTransaction.date} onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })} className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]" required />
+          </div>
 
-        <div className="mb-4">
-          <label className="block">{t("type")}</label>
-          <select value={newTransaction.type} onChange={(e) => setNewTransaction({ ...newTransaction, type: e.target.value })} className="w-full p-2 border rounded">
-            <option value="income">{t("income")}</option>
-            <option value="expense">{t("expense")}</option>
-          </select>
-        </div>
+          <div className="mb-2">
+            <label className="block text-[#3E3F29] font-medium">{t("description")}</label>
+            <input type="text" value={newTransaction.description} onChange={(e) => setNewTransaction({ ...newTransaction, description: e.target.value })} className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]" required />
+          </div>
 
-        <button type="submit" className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition">
-          {editingTransaction ? t("save_changes") : t("add_transaction")}
-        </button>
-      </form>
+          <div className="mb-2">
+            <label className="block text-[#3E3F29] font-medium">{t("amount")}</label>
+            <input type="number" value={newTransaction.amount} onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })} className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]" required />
+          </div>
 
-      <button
+          <div className="mb-4">
+            <label className="block text-[#3E3F29] font-medium">{t("type")}</label>
+            <select value={newTransaction.type} onChange={(e) => setNewTransaction({ ...newTransaction, type: e.target.value })} className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]">
+              <option value="income">{t("income")}</option>
+              <option value="expense">{t("expense")}</option>
+            </select>
+          </div>
+
+          <button type="submit" className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition">
+            {editingTransaction ? t("save_changes") : t("add_transaction")}
+          </button>
+        </form>
+
+        <button
           onClick={() => window.history.back()}
-          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+          className="w-full mt-4 bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
         >
           {t("back_to_admin_panel")}
         </button>
+      </div>
     </div>
   );
 }

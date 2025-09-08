@@ -47,6 +47,7 @@ function AdminRegisterMember() {
 
       setSuccess(t("registration_successful"));
       setFormData({ name: "", email: "", phone: "", address: "", message: "" });
+      setError("");
     } catch (error) {
       console.error("Error submitting form:", error);
       setError(t("registration_error"));
@@ -54,86 +55,86 @@ function AdminRegisterMember() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
+    <div className="flex justify-center items-center min-h-screen bg-[#F1F0E4] p-6">
+      <div className="w-full max-w-lg bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl p-6">
+        <h2 className="text-2xl font-serif font-bold text-center text-[#3E3F29] mb-2">
           {t("register_member")}
         </h2>
-        <p className="text-center text-gray-600 mb-4">{t("register_member_instruction")}</p>
+        <p className="text-center text-[#7D8D86] mb-4">{t("register_member_instruction")}</p>
 
-        {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center">{success}</p>}
-        {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center">{error}</p>}
+        {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center mb-2">{success}</p>}
+        {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center mb-2">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-medium">{t("name")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("name")}</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">{t("email")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("email")}</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">{t("phone")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")}</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">{t("address")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("address")}</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">{t("additional_message")}</label>
+            <label className="block text-[#3E3F29] font-medium mb-1">{t("additional_message")}</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               rows="3"
             ></textarea>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
           >
             {t("submit")}
           </button>
         </form>
 
         <button
-          className="w-full mt-4 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition"
+          className="w-full mt-4 bg-[#7D8D86] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#BCA88D] transition"
           onClick={() => window.history.back()}
         >
           {t("back_to_registration_panel")}

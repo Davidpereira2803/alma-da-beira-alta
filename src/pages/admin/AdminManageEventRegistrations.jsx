@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { collection, doc, getDocs, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
-import QRCodeGenerator from "../../components/QR-Generator";
 import emailjs from "@emailjs/browser";
-import QRCode from "qrcode";
 
 function AdminManageEventRegistrations() {
   const { t } = useTranslation();
@@ -12,14 +10,12 @@ function AdminManageEventRegistrations() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [registrations, setRegistrations] = useState([]);
   const [editingRegistration, setEditingRegistration] = useState(null);
-  const [visibleQR, setVisibleQR] = useState(null);
 
   const [newRegistration, setNewRegistration] = useState({
     name: "",
     email: "",
     description: "",
     isMember: false,
-    qrCodeData: "",
     password: "",
   });
 
@@ -31,26 +27,21 @@ function AdminManageEventRegistrations() {
     fetchEvents();
   }, []);
 
-  const sendEmailWithQR = async (recipientEmail, qrCodeBase64, name, eventTitle, uniquepassowrd) => {
-    const qrPageLink = `${window.location.origin}/qr`;
-
+  const sendEmail = async (recipientEmail, name, eventTitle, uniquepassowrd) => {
     const templateParams = {
       to_email: recipientEmail,
       user_name: name,
       event_title: eventTitle,
-      qr_code_attachment: qrCodeBase64,
-      qr_page_link: qrPageLink,
       password: uniquepassowrd,
     };
-  
+
     try {
-      const response = await emailjs.send(
+      await emailjs.send(
         import.meta.env.VITE_EMAIL_SERVICE,
         import.meta.env.VITE_EMAIL_TEMPLATE2,
         templateParams,
         import.meta.env.VITE_EMAIL_PUBLIC
       );
-      console.log("Email sent successfully!", response.status, response.text);
     } catch (error) {
       console.error("Failed to send email:", error);
     }
@@ -70,50 +61,44 @@ function AdminManageEventRegistrations() {
     setRegistrations(registrationsList);
   };
 
-const handleAddOrUpdateRegistration = async (e) => {
-  e.preventDefault();
-  if (!selectedEvent || !newRegistration.name || !newRegistration.description) return;
+  const handleAddOrUpdateRegistration = async (e) => {
+    e.preventDefault();
+    if (!selectedEvent || !newRegistration.name || !newRegistration.description) return;
 
-  const qrCodeData = `${newRegistration.name} - ${selectedEvent}`;
-  const password = generatePassword();
+    const password = generatePassword();
 
-  try {
-    const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
+    try {
+      if (editingRegistration) {
+        await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), {
+          ...newRegistration,
+        });
 
-    if (editingRegistration) {
-      await updateDoc(doc(db, `events/${selectedEvent}/registrations/${editingRegistration.id}`), {
-        ...newRegistration,
-        qrCodeData,
-      });
+        setRegistrations(registrations.map((reg) =>
+          reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration } : reg
+        ));
 
-      setRegistrations(registrations.map((reg) =>
-        reg.id === editingRegistration.id ? { id: reg.id, ...newRegistration, qrCodeData } : reg
-      ));
+        setEditingRegistration(null);
+      } else {
+        const eventRef = collection(db, `events/${selectedEvent}/registrations`);
+        const docRef = await addDoc(eventRef, {
+          ...newRegistration,
+          password,
+          arrived: false,
+          paid: false,
+        });
 
-      setEditingRegistration(null);
-    } else {
-      const eventRef = collection(db, `events/${selectedEvent}/registrations`);
-      const docRef = await addDoc(eventRef, {
-        ...newRegistration,
-        qrCodeData,
-        password,
-        arrived: false,
-        paid: false,
-      });
+        setRegistrations([...registrations, { id: docRef.id, ...newRegistration, arrived: false, paid: false }]);
 
-      setRegistrations([...registrations, { id: docRef.id, ...newRegistration, qrCodeData, arrived: false, paid: false }]);
-
-      if (newRegistration.email && newRegistration.email.trim() !== "") {
-        sendEmailWithQR(newRegistration.email, qrCodeUrl, newRegistration.name, selectedEvent, password);
+        if (newRegistration.email && newRegistration.email.trim() !== "") {
+          sendEmail(newRegistration.email, newRegistration.name, selectedEvent, password);
+        }
       }
+    } catch (error) {
+      console.error("Error saving registration:", error);
     }
-  } catch (error) {
-    console.error("Error generating QR code:", error);
-  }
 
-  setNewRegistration({ name: "", email: "", description: "", isMember: false, qrCodeData: "" });
-};
-
+    setNewRegistration({ name: "", email: "", description: "", isMember: false });
+  };
 
   const handleEditRegistration = (registration) => {
     setNewRegistration(registration);
@@ -125,18 +110,14 @@ const handleAddOrUpdateRegistration = async (e) => {
     setRegistrations(registrations.filter((reg) => reg.id !== userId));
   };
 
-  const toggleQRVisibility = (regId) => {
-    setVisibleQR(visibleQR === regId ? null : regId);
-  };
-
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("manage_event_registrations")}</h2>
+    <div className="max-w-5xl mx-auto p-6 bg-[#F1F0E4] min-h-screen">
+      <h2 className="text-2xl font-serif font-bold text-[#3E3F29] mb-4">{t("manage_event_registrations")}</h2>
 
       <div className="mb-4">
-        <label className="block text-gray-700">{t("select_event")}</label>
+        <label className="block text-[#3E3F29] font-medium">{t("select_event")}</label>
         <select
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
           onChange={(e) => fetchRegistrations(e.target.value)}
           defaultValue=""
         >
@@ -148,37 +129,37 @@ const handleAddOrUpdateRegistration = async (e) => {
       </div>
 
       {selectedEvent && (
-        <form onSubmit={handleAddOrUpdateRegistration} className="mt-4 p-4 bg-white shadow-lg rounded-lg">
-          <h3 className="text-lg font-bold mb-2">{editingRegistration ? t("edit_registration") : t("add_registration")}</h3>
+        <form onSubmit={handleAddOrUpdateRegistration} className="mt-4 p-4 bg-[#7D8D86] shadow-lg rounded-lg">
+          <h3 className="text-lg font-bold mb-2 text-[#3E3F29]">{editingRegistration ? t("edit_registration") : t("add_registration")}</h3>
 
           <div className="mb-2">
-            <label className="block">{t("name")}</label>
+            <label className="block text-[#3E3F29] font-medium">{t("name")}</label>
             <input
               type="text"
               value={newRegistration.name}
               onChange={(e) => setNewRegistration({ ...newRegistration, name: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
 
           <div className="mb-2">
-            <label className="block">{t("email")}</label>
+            <label className="block text-[#3E3F29] font-medium">{t("email")}</label>
             <input
               type="email"
               value={newRegistration.email}
               onChange={(e) => setNewRegistration({ ...newRegistration, email: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
             />
           </div>
 
           <div className="mb-2">
-            <label className="block">{t("description")}</label>
+            <label className="block text-[#3E3F29] font-medium">{t("description")}</label>
             <input
               type="text"
               value={newRegistration.description}
               onChange={(e) => setNewRegistration({ ...newRegistration, description: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               required
             />
           </div>
@@ -190,63 +171,51 @@ const handleAddOrUpdateRegistration = async (e) => {
               onChange={(e) => setNewRegistration({ ...newRegistration, isMember: e.target.checked })}
               className="mr-2"
             />
-            <label>{t("is_member")}</label>
+            <label className="text-[#3E3F29]">{t("is_member")}</label>
           </div>
 
-          <button type="submit" className="w-full bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900 transition">
+          <button type="submit" className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition">
             {editingRegistration ? t("save_changes") : t("add_person")}
           </button>
         </form>
       )}
 
-      {visibleQR && (
-        <div className="mt-4 text-center">
-          <QRCodeGenerator text={registrations.find((reg) => reg.id === visibleQR)?.qrCodeData || ""} />
-        </div>
-      )}
-
       {selectedEvent && (
-        <table className="w-full border-collapse border border-gray-300 mt-4">
+        <table className="w-full border-collapse border border-[#BCA88D] mt-4 rounded-lg overflow-hidden">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="border p-2">{t("name")}</th>
-              <th className="border p-2">{t("description")}</th>
-              <th className="border p-2">{t("is_member")}</th>
-              <th className="border p-2">{t("actions")}</th>
+            <tr className="bg-[#7D8D86] text-[#3E3F29]">
+              <th className="border border-[#BCA88D] p-2">{t("name")}</th>
+              <th className="border border-[#BCA88D] p-2">{t("description")}</th>
+              <th className="border border-[#BCA88D] p-2">{t("is_member")}</th>
+              <th className="border border-[#BCA88D] p-2">{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
             {registrations.map((reg) => (
-              <tr key={reg.id} className="text-center">
-                <td className="border p-2">{reg.name}</td>
-                <td className="border p-2">{reg.description}</td>
-                <td className="border p-2">{reg.isMember ? "✅" : "❌"}</td>
-                <td className="border p-2 flex space-x-2 justify-center">
+              <tr key={reg.id} className="text-center bg-[#F1F0E4]">
+                <td className="border border-[#BCA88D] p-2">{reg.name}</td>
+                <td className="border border-[#BCA88D] p-2">{reg.description}</td>
+                <td className="border border-[#BCA88D] p-2">{reg.isMember ? "✅" : "❌"}</td>
+                <td className="border border-[#BCA88D] p-2 flex space-x-2 justify-center">
                   <button
-                    className="bg-blue-500 text-white px-2 py-1 rounded"
+                    className="bg-blue-500 text-white px-2 py-1 rounded font-semibold shadow hover:bg-blue-700 transition"
                     onClick={() => handleEditRegistration(reg)}
                   >
                     {t("edit")}
                   </button>
                   <button
-                    className="bg-red-500 text-white px-2 py-1 rounded"
+                    className="bg-red-500 text-white px-2 py-1 rounded font-semibold shadow hover:bg-red-700 transition"
                     onClick={() => handleDeleteRegistration(reg.id)}
                   >
                     {t("remove")}
                   </button>
-                  <button
-                    className="bg-green-500 text-white px-2 py-1 rounded"
-                    onClick={() => toggleQRVisibility(reg.id)}
-                  >
-                    {visibleQR === reg.id ? t("hide_qr") : t("show_qr")}
-                  </button>
                 </td>
               </tr>
             ))}
-            <tr className="bg-gray-100 text-center font-bold">
-              <td className="border p-2" colSpan="2">{t("total_people")}</td>
-              <td className="border p-2">{registrations.length}</td>
-              <td className="border p-2">{registrations.filter(reg => reg.isMember).length} {t("members")}</td>
+            <tr className="bg-[#F1F0E4] text-center font-bold">
+              <td className="border border-[#BCA88D] p-2" colSpan="2">{t("total_people")}</td>
+              <td className="border border-[#BCA88D] p-2">{registrations.length}</td>
+              <td className="border border-[#BCA88D] p-2">{registrations.filter(reg => reg.isMember).length} {t("members")}</td>
             </tr>
           </tbody>
         </table>
@@ -254,7 +223,7 @@ const handleAddOrUpdateRegistration = async (e) => {
 
       <button
         onClick={() => window.history.back()}
-        className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+        className="w-full mt-4 bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
       >
         {t("back_to_admin_panel")}
       </button>
