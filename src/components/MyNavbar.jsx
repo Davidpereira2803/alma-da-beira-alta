@@ -12,7 +12,7 @@ function MyNavbar() {
   const navLinks = [
     { to: "/gallery", label: t("gallery") },
     { to: "/events", label: t("events") },
-    { to: "/register", label: t("register") },
+    { to: "/about", label: t("about_us") },
   ];
 
   return (

@@ -4,6 +4,8 @@ import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 import heroImg from "../assets/landscape.jpg";
+import Lottie from "lottie-react";
+import galoAnimation from "../assets/animations/dancing-animation.json";
 
 function Home() {
   const { t } = useTranslation();
@@ -45,7 +47,7 @@ function Home() {
           alt="Alma da Beira Alta"
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
-        <div className="relative z-10 text-center w-full">
+        <div className="relative z-10 text-center w-full flex flex-col items-center">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#BCA88D] mb-6 drop-shadow-lg">
             Alma da Beira Alta
           </h1>
@@ -77,10 +79,11 @@ function Home() {
             </ul>
           </div>
           <div className="flex justify-center">
-            <img
-              src={heroImg}
-              alt="Folklore Group"
-              className="rounded-2xl shadow-lg w-full max-w-sm object-cover border-4 border-[#BCA88D]"
+            <Lottie
+              animationData={galoAnimation}
+              loop={true}
+              style={{ width: "100%", maxWidth: 320, height: 320 }}
+              className="rounded-2xl shadow-lg border-4 border-[#BCA88D] bg-white"
             />
           </div>
         </div>
