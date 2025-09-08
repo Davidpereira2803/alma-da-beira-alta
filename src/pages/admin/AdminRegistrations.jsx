@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, getDocs, deleteDoc, addDoc, doc, query, orderBy, limit } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 
@@ -68,31 +68,31 @@ function AdminRegistrations() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+    <div className="flex justify-center items-center min-h-screen bg-[#F1F0E4] p-6">
+      <div className="w-full max-w-4xl bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl p-6">
+        <h2 className="text-2xl font-serif font-bold text-center text-[#3E3F29] mb-4">
           {t("pending_registrations")}
         </h2>
 
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse border border-gray-300">
+          <table className="w-full border-collapse border border-[#BCA88D] rounded-lg overflow-hidden">
             <thead>
-              <tr className="bg-gray-300 text-gray-700">
-                <th className="border p-2">{t("name")}</th>
-                <th className="border p-2">{t("email")}</th>
-                <th className="border p-2">{t("phone")}</th>
-                <th className="border p-2">{t("address")}</th>
-                <th className="border p-2">{t("actions")}</th>
+              <tr className="bg-[#7D8D86] text-[#3E3F29]">
+                <th className="border border-[#BCA88D] p-2">{t("name")}</th>
+                <th className="border border-[#BCA88D] p-2">{t("email")}</th>
+                <th className="border border-[#BCA88D] p-2">{t("phone")}</th>
+                <th className="border border-[#BCA88D] p-2">{t("address")}</th>
+                <th className="border border-[#BCA88D] p-2">{t("actions")}</th>
               </tr>
             </thead>
             <tbody>
               {registrations.map((reg) => (
-                <tr key={reg.id} className="text-center bg-gray-100">
-                  <td className="border p-2">{reg.name}</td>
-                  <td className="border p-2">{reg.email}</td>
-                  <td className="border p-2">{reg.phone}</td>
-                  <td className="border p-2">{reg.address}</td>
-                  <td className="border p-2 flex justify-center space-x-2">
+                <tr key={reg.id} className="text-center bg-[#F1F0E4]">
+                  <td className="border border-[#BCA88D] p-2">{reg.name}</td>
+                  <td className="border border-[#BCA88D] p-2">{reg.email}</td>
+                  <td className="border border-[#BCA88D] p-2">{reg.phone}</td>
+                  <td className="border border-[#BCA88D] p-2">{reg.address}</td>
+                  <td className="border border-[#BCA88D] p-2 flex justify-center space-x-2">
                     <button
                       className="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700 transition"
                       onClick={() => approveMember(reg)}
@@ -113,10 +113,10 @@ function AdminRegistrations() {
         </div>
 
         <div className="mt-4 space-y-2">
-          <a href="/admin/register" className="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+          <a href="/admin/register" className="block w-full text-center bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition">
             {t("register_member")}
           </a>
-          <a href="/admin" className="block w-full text-center bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition">
+          <a href="/admin" className="block w-full text-center bg-[#7D8D86] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#BCA88D] transition">
             {t("back_to_admin_panel")}
           </a>
         </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 
@@ -44,14 +44,14 @@ function AdminGallery() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-      <div className="w-full max-w-xl bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+    <div className="flex justify-center items-center min-h-screen bg-[#F1F0E4] p-6">
+      <div className="w-full max-w-xl bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl p-6">
+        <h2 className="text-2xl font-serif font-bold text-center text-[#3E3F29] mb-4">
           {t("manage_gallery")}
         </h2>
 
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-1">
+          <label className="block text-[#3E3F29] font-medium mb-1">
             {t("image_url")}
           </label>
           <input
@@ -59,27 +59,27 @@ function AdminGallery() {
             placeholder={t("enter_image_url")}
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
           />
         </div>
 
         <button
-          className="w-full bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition duration-300 mb-3"
+          className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg shadow hover:bg-[#7D8D86] transition mb-3 font-semibold"
           onClick={handleAddImage}
         >
           {t("add_image")}
         </button>
 
-        <h3 className="text-xl font-semibold text-center mt-4">
+        <h3 className="text-xl font-semibold text-center mt-4 text-[#3E3F29]">
           {t("gallery_images")}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
           {images.map((img) => (
-            <div key={img.id} className="bg-white shadow-sm rounded-lg overflow-hidden">
-              <img src={img.url} alt={t("gallery_image_alt")} className="w-full h-40 object-cover" />
+            <div key={img.id} className="bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow rounded-lg overflow-hidden">
+              <img src={img.url} alt={t("gallery_image_alt")} className="w-full h-40 object-cover rounded-t-lg" />
               <div className="p-2 text-center">
                 <button
-                  className="bg-red-600 text-white py-1 px-3 rounded hover:bg-red-700 transition"
+                  className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition font-semibold"
                   onClick={() => handleDeleteImage(img.id)}
                 >
                   {t("delete")}
@@ -91,7 +91,7 @@ function AdminGallery() {
 
         <button
           onClick={() => window.history.back()}
-          className="w-full mt-4 bg-stone-700 text-white py-2 rounded-lg hover:bg-stone-900 transition"
+          className="w-full mt-4 bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg shadow hover:bg-[#7D8D86] transition font-semibold"
         >
           {t("back_to_admin_panel")}
         </button>
