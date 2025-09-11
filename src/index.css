@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+.masonry-column {
+  background-clip: padding-box;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.masonry-column > a {
+  margin: 0 !important;
+  padding: 0 !important;
+}

@@ -6,11 +6,12 @@ import { useTranslation } from "react-i18next";
 import heroImg from "../assets/landscape.jpg";
 import Lottie from "lottie-react";
 import galoAnimation from "../assets/animations/dancing-animation.json";
+import Masonry from "react-masonry-css";
 
 function Home() {
   const { t } = useTranslation();
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [latestImage, setLatestImage] = useState(null);
+  const [latestImages, setLatestImages] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -24,20 +25,30 @@ function Home() {
       setUpcomingEvents(upcoming);
     };
 
-    const fetchLatestImage = async () => {
+    const fetchLatestImages = async () => {
       const querySnapshot = await getDocs(collection(db, "gallery"));
       const images = querySnapshot.docs.map(doc => doc.data());
-      if (images.length > 0) {
-        const latest = images.reduce((prev, curr) =>
-          new Date(curr.uploadedAt) > new Date(prev.uploadedAt) ? curr : prev
-        );
-        setLatestImage(latest);
-      }
+      // Sort by uploadedAt descending and take the latest 6
+      const sorted = images.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+      setLatestImages(sorted.slice(0, 6));
     };
 
     fetchEvents();
-    fetchLatestImage();
+    fetchLatestImages();
   }, []);
+
+  // Calculate columns: up to 8, but only as many as images
+  const galleryCols = Math.min(latestImages.length, 8);
+  const gridColsClass = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+    4: "grid-cols-4",
+    5: "grid-cols-5",
+    6: "grid-cols-6",
+    7: "grid-cols-7",
+    8: "grid-cols-8",
+  }[galleryCols];
 
   return (
     <div className="bg-[#F1F0E4] min-h-screen font-sans">
@@ -88,9 +99,9 @@ function Home() {
           </div>
         </div>
         <div className="flex justify-center mt-8">
-          <Link to="/register">
+          <Link to="/about">
             <button className="bg-[#BCA88D] hover:bg-[#7D8D86] text-[#3E3F29] font-semibold px-8 py-3 rounded-full shadow-lg transition">
-              {t("join_us") || "Join Us"}
+              {t("about_us") || "About Us"}
             </button>
           </Link>
         </div>
@@ -124,28 +135,50 @@ function Home() {
               </div>
             )}
           </div>
+          <div className="flex justify-center mt-8">
+            <Link to="/events">
+              <button className="bg-[#BCA88D] hover:bg-[#7D8D86] text-[#3E3F29] font-semibold px-8 py-3 rounded-full shadow-lg transition">
+                {t("view_all_events") || "View All Events"}
+              </button>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="bg-[#F1F0E4] py-16">
-        <div className="max-w-5xl mx-auto px-4">
+      <section className="bg-[#F1F0E4] py-16 w-full">
+        <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-2xl font-serif font-bold text-[#3E3F29] mb-8 text-center">
             {t("gallery") || "Gallery"}
           </h3>
-          <div className="flex flex-col items-center">
-            {latestImage ? (
-              <Link to="/gallery">
-                <img
-                  src={latestImage.url}
-                  alt={t("gallery_image_alt")}
-                  className="rounded-xl shadow-lg object-cover h-40 w-64 border-4 border-[#BCA88D] mx-auto"
-                />
-              </Link>
-            ) : (
-              <p className="text-[#7D8D86]">{t("no_images_available") || "No images available."}</p>
-            )}
+          {latestImages.length > 0 ? (
+            <Masonry
+              breakpointCols={{ default: 8, 1100: 6, 700: 4, 500: 2 }}
+              className="flex w-full"
+              columnClassName="masonry-column"
+            >
+              {latestImages.map((img, idx) => (
+                <Link to="/gallery" key={idx} className="block w-full">
+                  <img
+                    src={img.url}
+                    alt={t("gallery_image_alt")}
+                    className="w-full object-cover"
+                    style={{
+                      margin: 0,
+                      padding: 0,
+                      border: "none",
+                      display: "block",
+                      height: `${180 + Math.floor(Math.random() * 120)}px`, // random height for organic look
+                    }}
+                  />
+                </Link>
+              ))}
+            </Masonry>
+          ) : (
+            <p className="text-[#7D8D86] text-center">{t("no_images_available") || "No images available."}</p>
+          )}
+          <div className="flex justify-center mt-8">
             <Link to="/gallery">
-              <button className="mt-8 bg-[#BCA88D] text-[#3E3F29] px-6 py-2 rounded-full hover:bg-[#7D8D86] transition shadow-lg">
+              <button className="bg-[#BCA88D] text-[#3E3F29] font-semibold px-6 py-2 rounded-full hover:bg-[#7D8D86] transition shadow-lg">
                 {t("view_full_gallery") || "View Full Gallery"}
               </button>
             </Link>
