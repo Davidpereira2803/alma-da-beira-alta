@@ -209,7 +209,7 @@ function Home() {
                   {t("community_support_desc") || "Connect with fellow Portuguese speakers and build lasting friendships in our welcoming community."}
                 </p>
               </div>
-              <Link to="/about" className="inline-flex items-center text-[#BCA88D] font-semibold hover:text-[#7D8D86] transition-colors">
+              <Link to="/register" className="inline-flex items-center text-[#BCA88D] font-semibold hover:text-[#7D8D86] transition-colors">
                 {t("join_community") || "Join Community"}
                 <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
