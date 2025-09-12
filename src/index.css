@@ -9,3 +9,33 @@
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* Stable hero height utility: prefers 100svh, falls back to JS --vh */
+@supports (height: 100svh) {
+  .hero-min-h {
+    min-height: 100svh; /* Stable viewport height */
+  }
+}
+@supports not (height: 100svh) {
+  .hero-min-h {
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+}
+
+/* Fixed header height (matches h-16 md:h-20) */
+:root { --header-h: 64px; }            /* 16 * 4px */
+@media (min-width: 768px) {
+  :root { --header-h: 80px; }          /* 20 * 4px */
+}
+
+/* Ensure hero content is not hidden behind the fixed navbar */
+.hero-safe-top {
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top));
+}
+
+/* Nice-to-have: anchors and hash links scroll below the header */
+html { scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top) + 8px); }
+
+/* Optional: hide mobile scrollbars for filter chips if you use overflow-x */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

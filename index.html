@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/icon ADBA [Recovered]-02.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Ensure safe areas on iOS and correct viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link href="/src/index.css" rel="stylesheet">
     <title>Alma Da Beira Alta</title>
+    <script>
+      // Fallback for older iOS that doesn't support svh
+      function setVh() {
+        document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+      }
+      setVh();
+      window.addEventListener('resize', setVh);
+    </script>
   </head>
   <body>
     <div id="root"></div>
