@@ -284,11 +284,14 @@ export default function Events() {
                     {event.description && (
                       <p className="mb-4 text-[#3E3F29]">{event.description}</p>
                     )}
-                    <div className="flex gap-3 mt-auto">
+                    <div className="flex gap-2 mt-auto">
                       {event.pdfUrl && (
                         <button
                           onClick={() => handleViewPdf(event.pdfUrl)}
-                          className="bg-[#BCA88D] hover:bg-[#7D8D86] text-[#3E3F29] py-2 px-4 rounded-full shadow transition font-semibold"
+                          className="inline-flex items-center gap-2 rounded-full h-9 md:h-10 px-3.5 md:px-4 text-xs md:text-sm font-semibold
+                                     bg-white text-[#3E3F29] ring-1 ring-[#3E3F29]/20 hover:bg-[#F1F0E4] active:scale-[.98]
+                                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-[#F1F0E4]"
+                          aria-label={`${t("view_brochure")} — ${event.title}`}
                         >
                           {t("view_brochure")}
                         </button>
@@ -297,7 +300,10 @@ export default function Events() {
                         <a
                           href={event.pdfUrl}
                           download
-                          className="bg-[#7D8D86] hover:bg-[#BCA88D] text-[#3E3F29] py-2 px-4 rounded-full shadow transition font-semibold"
+                          className="inline-flex items-center gap-2 rounded-full h-9 md:h-10 px-3.5 md:px-4 text-xs md:text-sm font-semibold
+                                     bg-[#7D8D86] text-white hover:bg-[#6a7a73] active:scale-[.98]
+                                     shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-[#F1F0E4]"
+                          aria-label={`${t("download_pdf")} — ${event.title}`}
                         >
                           {t("download_pdf")}
                         </a>
@@ -307,9 +313,12 @@ export default function Events() {
                           href={event.registrationUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="bg-[#3E3F29] hover:bg-[#7D8D86] text-white py-2 px-4 rounded-full shadow transition font-semibold"
+                          className="inline-flex items-center gap-2 rounded-full h-9 md:h-10 px-3.5 md:px-4 text-xs md:text-sm font-semibold
+                                     bg-[#3E3F29] text-white hover:bg-[#2f3022] active:scale-[.98]
+                                     shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-[#F1F0E4]"
+                          aria-label={`${t("register_event") || "Register to Event"} — ${event.title}`}
                         >
-                          {t("register") || "Register"}
+                          {t("register_event") || "Register to Event"}
                         </a>
                       )}
                     </div>
@@ -362,12 +371,19 @@ export default function Events() {
                     {event.description && (
                       <p className="mb-4 text-[#3E3F29]">{event.description}</p>
                     )}
-                    <div className="flex gap-3 mt-auto">
+                    <div className="flex gap-2 mt-auto">
                       {event.pdfUrl && (
                         <button
                           onClick={() => handleViewPdf(event.pdfUrl)}
-                          className="bg-[#BCA88D] hover:bg-[#7D8D86] text-[#3E3F29] py-2 px-4 rounded-full shadow transition font-semibold"
+                          className="inline-flex items-center gap-2 rounded-full h-9 md:h-10 px-3.5 md:px-4 text-xs md:text-sm font-semibold
+                                     bg-white text-[#3E3F29] ring-1 ring-[#3E3F29]/20 hover:bg-[#F1F0E4] active:scale-[.98]
+                                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-[#F1F0E4]"
+                          aria-label={`${t("view_brochure")} — ${event.title}`}
                         >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 4h9l3 3v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="2"/>
+                            <path d="M15 4v5h5" stroke="currentColor" strokeWidth="2"/>
+                          </svg>
                           {t("view_brochure")}
                         </button>
                       )}
@@ -375,8 +391,15 @@ export default function Events() {
                         <a
                           href={event.pdfUrl}
                           download
-                          className="bg-[#7D8D86] hover:bg-[#BCA88D] text-[#3E3F29] py-2 px-4 rounded-full shadow transition font-semibold"
+                          className="inline-flex items-center gap-2 rounded-full h-9 md:h-10 px-3.5 md:px-4 text-xs md:text-sm font-semibold
+                                     bg-[#7D8D86] text-white hover:bg-[#6a7a73] active:scale-[.98]
+                                     shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ring-offset-[#F1F0E4]"
+                          aria-label={`${t("download_pdf")} — ${event.title}`}
                         >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M4 21h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                          </svg>
                           {t("download_pdf")}
                         </a>
                       )}

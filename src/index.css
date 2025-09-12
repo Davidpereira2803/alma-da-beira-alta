@@ -33,6 +33,16 @@
   padding-top: calc(var(--header-h) + env(safe-area-inset-top));
 }
 
+/* Add safe space below the fixed navbar for non-hero pages */
+.page-safe-top {
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top));
+}
+
+/* Optional: a touch more breathing room for dense forms */
+.page-safe-top-plus {
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top) + 0.5rem);
+}
+
 /* Nice-to-have: anchors and hash links scroll below the header */
 html { scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top) + 8px); }
 
