@@ -18,7 +18,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import AdminFinancePanel from "./pages/admin/AdminFinancePanel";
 import AdminEventRegistrations from "./pages/admin/AdminEventRegistrations";
 import AdminManageEventRegistrations from "./pages/admin/AdminManageEventRegistrations";
-import About from "./pages/About"; // Add this import
+import About from "./pages/About";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/about" element={<About />} /> {/* Add this line */}
+            <Route path="/about" element={<About />} />
             <Route path="/register" element={<RegisterMember />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

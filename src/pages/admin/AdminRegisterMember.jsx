@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { db } from "../../firebase";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import AdminLayout from "./AdminLayout";
 
 function AdminRegisterMember() {
   const { t } = useTranslation();
@@ -14,104 +15,142 @@ function AdminRegisterMember() {
     message: "",
   });
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [notice, setNotice] = useState({ type: "", message: "" });
+
+  const showNotice = (message, type = "success") => {
+    setNotice({ type, message });
+    window.clearTimeout(showNotice._t);
+    showNotice._t = window.setTimeout(() => setNotice({ type: "", message: "" }), 2500);
+  };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
   };
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const validatePhone = (phone) => /^[+0-9][0-9\s().-]{5,}$/.test((phone || "").trim());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.phone || !formData.address) {
-      setError(t("all_fields_required"));
+      showNotice(t("all_fields_required") || "Please fill all required fields.", "error");
+      return;
+    }
+    if (!validateEmail(formData.email)) {
+      showNotice(t("invalid_email") || "Please enter a valid email.", "error");
+      return;
+    }
+    if (!validatePhone(formData.phone)) {
+      showNotice(t("invalid_phone") || "Please enter a valid phone number.", "error");
       return;
     }
 
+    setLoading(true);
     try {
-      const membersRef = collection(db, "registrations");
+      const regsRef = collection(db, "registrations");
+      const membersRef = collection(db, "members");
 
-      const emailQuery = query(membersRef, where("email", "==", formData.email));
-      const emailSnapshot = await getDocs(emailQuery);
+      const [regByEmail, regByPhone, memByEmail, memByPhone] = await Promise.all([
+        getDocs(query(regsRef, where("email", "==", formData.email))),
+        getDocs(query(regsRef, where("phone", "==", formData.phone))),
+        getDocs(query(membersRef, where("email", "==", formData.email))),
+        getDocs(query(membersRef, where("phone", "==", formData.phone))),
+      ]);
 
-      const phoneQuery = query(membersRef, where("phone", "==", formData.phone));
-      const phoneSnapshot = await getDocs(phoneQuery);
-
-      if (!emailSnapshot.empty || !phoneSnapshot.empty) {
-        setError(t("member_already_exists"));
+      if (!regByEmail.empty || !regByPhone.empty || !memByEmail.empty || !memByPhone.empty) {
+        showNotice(t("member_already_exists") || "A registration with this email or phone already exists.", "error");
+        setLoading(false);
         return;
       }
 
-      await addDoc(membersRef, formData);
+      await addDoc(regsRef, {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
 
-      setSuccess(t("registration_successful"));
+      showNotice(t("registration_successful") || "Registration submitted successfully.");
       setFormData({ name: "", email: "", phone: "", address: "", message: "" });
-      setError("");
     } catch (error) {
       console.error("Error submitting form:", error);
-      setError(t("registration_error"));
+      showNotice(t("registration_error") || "There was an error. Please try again.", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#F1F0E4] p-6">
-      <div className="w-full max-w-lg bg-[#F1F0E4] border-t-4 border-[#BCA88D] shadow-lg rounded-xl p-6">
-        <h2 className="text-2xl font-serif font-bold text-center text-[#3E3F29] mb-2">
-          {t("register_member")}
-        </h2>
-        <p className="text-center text-[#7D8D86] mb-4">{t("register_member_instruction")}</p>
+    <AdminLayout
+      title={t("register_member")}
+      description={t("register_member_instruction") || "Fill in the details to create a registration."}
+    >
+      {notice.message && (
+        <div
+          role="status"
+          className={`mb-4 rounded-lg p-3 text-sm ${
+            notice.type === "error" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
+          }`}
+        >
+          {notice.message}
+        </div>
+      )}
 
-        {success && <p className="bg-green-100 text-green-800 p-2 rounded text-center mb-2">{success}</p>}
-        {error && <p className="bg-red-100 text-red-800 p-2 rounded text-center mb-2">{error}</p>}
-
+      <div className="bg-white rounded-2xl shadow border-t-4 border-[#BCA88D] p-4 md:p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-[#3E3F29] font-medium mb-1">{t("name")}</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-              required
-            />
-          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("name")}</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder={t("name_placeholder") || "Your full name"}
+                className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-[#3E3F29] font-medium mb-1">{t("email")}</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("email")}</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")}</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-              required
-            />
-          </div>
+            <div>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")}</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder={t("phone_placeholder") || "+352 6x xx xx xx"}
+                className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
+                required
+              />
+              <p className="text-xs text-[#7D8D86] mt-1">{t("phone_hint") || "Include country code if possible."}</p>
+            </div>
 
-          <div>
-            <label className="block text-[#3E3F29] font-medium mb-1">{t("address")}</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-              required
-            />
+            <div>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("address")}</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder={t("address_placeholder") || "Street, City, Postal code"}
+                className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
+                required
+              />
+            </div>
           </div>
 
           <div>
@@ -120,27 +159,38 @@ function AdminRegisterMember() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full p-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
+              placeholder={t("message_placeholder") || "Any additional information"}
+              className="w-full min-h-24 px-3 py-2 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
               rows="3"
-            ></textarea>
+            />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
-          >
-            {t("submit")}
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center justify-center rounded-full h-11 px-6 bg-[#BCA88D] text-[#3E3F29] font-semibold shadow hover:bg-[#7D8D86] disabled:opacity-60"
+            >
+              {loading ? t("submitting") || "Submitting..." : t("submit")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormData({ name: "", email: "", phone: "", address: "", message: "" })}
+              className="inline-flex items-center justify-center rounded-full h-11 px-6 bg-white text-[#3E3F29] ring-1 ring-[#3E3F29]/15 hover:bg-[#F1F0E4]"
+            >
+              {t("clear") || "Clear"}
+            </button>
+          </div>
         </form>
-
-        <button
-          className="w-full mt-4 bg-[#7D8D86] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#BCA88D] transition"
-          onClick={() => window.history.back()}
-        >
-          {t("back_to_registration_panel")}
-        </button>
       </div>
-    </div>
+
+      <button
+        className="w-full mt-6 bg-[#BCA88D] text-[#3E3F29] py-2 rounded-lg font-semibold shadow hover:bg-[#7D8D86] transition"
+        onClick={() => window.history.back()}
+      >
+        {t("back_to_admin_panel") || t("back_to_registration_panel")}
+      </button>
+    </AdminLayout>
   );
 }
 
