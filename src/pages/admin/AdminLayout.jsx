@@ -10,7 +10,7 @@ export default function AdminLayout({ title, description, right, children }) {
     { to: "/admin/gallery", label: t("admin_gallery") || "Gallery" },
     { to: "/admin/registrations", label: t("admin_registrations") || "Registrations" },
     { to: "/admin/members", label: t("admin_members") || "Members" },
-    { to: "/admin/register-member", label: t("admin_register_member") || "Register Member" },
+    { to: "/admin/register", label: t("admin_register_member") || "Register Member" },
     { to: "/admin/event-registrations", label: t("admin_event_registrations") || "Event Registrations" },
     { to: "/admin/manage-event-registrations", label: t("admin_manage_event_registrations") || "Manage Event Registrations" },
     { to: "/admin/finance", label: t("admin_finance") || "Finance" },
