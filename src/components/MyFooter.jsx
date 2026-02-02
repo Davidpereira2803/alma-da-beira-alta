@@ -71,8 +71,8 @@ function MyFooter() {
           {/* Contact + Admin */}
           <div className="flex flex-col items-center md:items-end gap-2">
             <div className="font-semibold text-[#BCA88D] mb-1">{t("contact")}</div>
-            <a href="mailto:info@almadabeiraalta.com" className="text-sm hover:text-[#BCA88D] transition">
-              <FaEnvelope className="inline-block mr-2 text-[#BCA88D]" /> info@almadabeiraalta.com
+            <a href="mailto:alma-beira-alta@hotmail.com" className="text-sm hover:text-[#BCA88D] transition">
+              <FaEnvelope className="inline-block mr-2 text-[#BCA88D]" /> alma-beira-alta@hotmail.com
             </a>
             <a href="tel:+352123456789" className="text-sm hover:text-[#BCA88D] transition">
               <FaPhone className="inline-block mr-2 text-[#BCA88D]" /> +352 123 456 789

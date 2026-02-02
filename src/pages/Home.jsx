@@ -690,7 +690,7 @@ function Home() {
               </button>
             </Link>
             <p className="text-sm text-[#7D8D86]">
-              {t("join_cta_note") || "Questions? Contact us at info@almadabeiraalta.lu"}
+              {t("join_cta_note") || "Questions? Contact us at alma-beira-alta@hotmail.com"}
             </p>
           </div>
         </div>

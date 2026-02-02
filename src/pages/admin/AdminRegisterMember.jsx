@@ -34,15 +34,15 @@ function AdminRegisterMember() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.address) {
+    if (!formData.name || !formData.address) {
       showNotice(t("all_fields_required") || "Please fill all required fields.", "error");
       return;
     }
-    if (!validateEmail(formData.email)) {
+    if (formData.email && !validateEmail(formData.email)) {
       showNotice(t("invalid_email") || "Please enter a valid email.", "error");
       return;
     }
-    if (!validatePhone(formData.phone)) {
+    if (formData.phone && !validatePhone(formData.phone)) {
       showNotice(t("invalid_phone") || "Please enter a valid phone number.", "error");
       return;
     }
@@ -52,17 +52,29 @@ function AdminRegisterMember() {
       const regsRef = collection(db, "registrations");
       const membersRef = collection(db, "members");
 
-      const [regByEmail, regByPhone, memByEmail, memByPhone] = await Promise.all([
-        getDocs(query(regsRef, where("email", "==", formData.email))),
-        getDocs(query(regsRef, where("phone", "==", formData.phone))),
-        getDocs(query(membersRef, where("email", "==", formData.email))),
-        getDocs(query(membersRef, where("phone", "==", formData.phone))),
-      ]);
+      const checks = [];
+      
+      if (formData.email) {
+        checks.push(
+          getDocs(query(regsRef, where("email", "==", formData.email))),
+          getDocs(query(membersRef, where("email", "==", formData.email)))
+        );
+      }
+      
+      if (formData.phone) {
+        checks.push(
+          getDocs(query(regsRef, where("phone", "==", formData.phone))),
+          getDocs(query(membersRef, where("phone", "==", formData.phone))),
+        );
+      }
 
-      if (!regByEmail.empty || !regByPhone.empty || !memByEmail.empty || !memByPhone.empty) {
-        showNotice(t("member_already_exists") || "A registration with this email or phone already exists.", "error");
-        setLoading(false);
-        return;
+      if (checks.length > 0) {
+        const results = await Promise.all(checks);
+        if (results.some(result => !result.empty)) {
+          showNotice(t("member_already_exists") || "A registration with this email or phone already exists.", "error");
+          setLoading(false);
+          return;
+        }
       }
 
       await addDoc(regsRef, {
@@ -113,7 +125,7 @@ function AdminRegisterMember() {
             </div>
 
             <div>
-              <label className="block text-[#3E3F29] font-medium mb-1">{t("email")}</label>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("email")} (Optional)</label>
               <input
                 type="email"
                 name="email"
@@ -121,12 +133,11 @@ function AdminRegisterMember() {
                 onChange={handleChange}
                 placeholder="you@example.com"
                 className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-                required
               />
             </div>
 
             <div>
-              <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")}</label>
+              <label className="block text-[#3E3F29] font-medium mb-1">{t("phone")} (Optional)</label>
               <input
                 type="tel"
                 name="phone"
@@ -134,7 +145,6 @@ function AdminRegisterMember() {
                 onChange={handleChange}
                 placeholder={t("phone_placeholder") || "+352 6x xx xx xx"}
                 className="w-full h-10 px-3 border border-[#BCA88D] rounded focus:outline-none focus:ring-2 focus:ring-[#BCA88D]"
-                required
               />
               <p className="text-xs text-[#7D8D86] mt-1">{t("phone_hint") || "Include country code if possible."}</p>
             </div>

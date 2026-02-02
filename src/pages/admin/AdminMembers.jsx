@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { db } from "../../firebase";
-import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, writeBatch, getDoc, setDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 import AdminLayout from "./AdminLayout";
 
@@ -24,16 +24,70 @@ function AdminMembers() {
     showNotice._t = setTimeout(() => setNotice({ type: "", message: "" }), 2500);
   };
 
+  // Check and perform yearly reset if needed
+  const checkAndResetYearly = async () => {
+    try {
+      const currentYear = new Date().getFullYear();
+      const lastResetYear = localStorage.getItem('membershipResetYear');
+      
+      // If we haven't reset this year yet, reset all members
+      if (lastResetYear !== String(currentYear)) {
+        const membersSnapshot = await getDocs(collection(db, "members"));
+        
+        if (membersSnapshot.size > 0) {
+          const batch = writeBatch(db);
+          
+          membersSnapshot.docs.forEach((memberDoc) => {
+            batch.update(memberDoc.ref, { processed: false });
+          });
+          
+          await batch.commit();
+          
+          // Store the reset year in localStorage
+          localStorage.setItem('membershipResetYear', String(currentYear));
+          
+          showNotice(
+            `Yearly membership reset completed! All ${membersSnapshot.size} members marked as unpaid for ${currentYear}.`,
+            "success"
+          );
+          
+          return true;
+        }
+      }
+      
+      return false;
+    } catch (error) {
+      console.error("Error during yearly reset:", error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     const fetchMembers = async () => {
       setLoading(true);
       try {
+        // First check if we need to do yearly reset
+        const resetPerformed = await checkAndResetYearly();
+        
+        // Then fetch members (they'll be updated if reset happened)
         const querySnapshot = await getDocs(collection(db, "members"));
         const memberList = querySnapshot.docs.map((d) => ({
           id: d.id,
           ...d.data(),
         }));
         setMembers(memberList);
+        
+        // Show a notice if no reset but it's a new year (first admin login of the year)
+        if (!resetPerformed && memberList.length > 0) {
+          const configRef = doc(db, "config", "membershipReset");
+          const configSnap = await getDoc(configRef);
+          if (configSnap.exists()) {
+            const lastReset = configSnap.data().lastResetYear;
+            if (lastReset === new Date().getFullYear()) {
+              // Already reset this year - could show info message
+            }
+          }
+        }
       } catch (e) {
         console.error(e);
         showNotice(t("loading_error") || "Failed to load members.", "error");
@@ -134,6 +188,35 @@ function AdminMembers() {
     URL.revokeObjectURL(url);
   };
 
+  // Manual reset function (optional - for admin to trigger manually)
+  const handleManualReset = async () => {
+    if (!window.confirm("Reset all members to unpaid status? This cannot be undone.")) return;
+    
+    try {
+      // Get fresh snapshot of all members
+      const membersSnapshot = await getDocs(collection(db, "members"));
+      
+      if (membersSnapshot.size === 0) {
+        showNotice("No members to reset.", "error");
+        return;
+      }
+      
+      const batch = writeBatch(db);
+      
+      membersSnapshot.docs.forEach((memberDoc) => {
+        batch.update(memberDoc.ref, { processed: false });
+      });
+      
+      await batch.commit();
+      
+      setMembers((prev) => prev.map((m) => ({ ...m, processed: false })));
+      showNotice(`All ${membersSnapshot.size} members have been reset to unpaid status.`);
+    } catch (error) {
+      console.error("Error resetting members:", error);
+      showNotice("Failed to reset members.", "error");
+    }
+  };
+
   return (
     <AdminLayout
       title={t("registered_members")}
@@ -186,13 +269,21 @@ function AdminMembers() {
           </div>
         </div>
 
-        <div className="md:col-span-4 flex md:justify-end gap-2">
+        <div className="md:col-span-4 flex md:justify-end gap-2 flex-wrap">
           <button
             onClick={exportCSV}
             className="inline-flex items-center gap-2 rounded-full h-10 px-4 text-sm font-semibold bg-white text-[#3E3F29] ring-1 ring-[#3E3F29]/15 hover:bg-[#F1F0E4] disabled:opacity-50"
             disabled={filtered.length === 0}
           >
             {t("export_csv") || "Export CSV"}
+          </button>
+          <button
+            onClick={handleManualReset}
+            className="inline-flex items-center gap-2 rounded-full h-10 px-4 text-sm font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
+            disabled={members.length === 0}
+            title="Reset all members to unpaid (use with caution)"
+          >
+            Reset All
           </button>
         </div>
       </div>
