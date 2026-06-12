@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, query, where, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
 import emailjs from "@emailjs/browser";
@@ -210,8 +211,16 @@ function RegisterMember() {
               required
             />
             <span>
-              {t("privacy_consent") ||
-                "I agree that my data will be stored and used to contact me about my membership request."}
+              {t("privacy_consent_prefix")}{" "}
+              <Link
+                to="/privacy-policy"
+                className="underline text-[#BCA88D] hover:text-[#7D8D86]"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("privacy_policy_title")}
+              </Link>
+              {t("privacy_consent_suffix")}
             </span>
           </label>
 

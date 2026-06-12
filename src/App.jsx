@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyNavbar from "./components/MyNavbar";
 import MyFooter from "./components/MyFooter";
+import CookieBanner from "./components/CookieBanner";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
@@ -19,6 +20,9 @@ import AdminFinancePanel from "./pages/admin/AdminFinancePanel";
 import AdminEventRegistrations from "./pages/admin/AdminEventRegistrations";
 import AdminManageEventRegistrations from "./pages/admin/AdminManageEventRegistrations";
 import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import CookiePolicy from "./pages/CookiePolicy";
 
 function App() {
   return (
@@ -35,6 +39,9 @@ function App() {
             <Route path="/register" element={<RegisterMember />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsConditions />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
 
             <Route path="/admin/members" element={<AdminProtectedRoute><AdminMembers /></AdminProtectedRoute>} />
             <Route path="/admin/registrations" element={<AdminProtectedRoute><AdminRegistrations /></AdminProtectedRoute>} />
@@ -49,6 +56,7 @@ function App() {
         </main>
 
         <MyFooter />
+        <CookieBanner />
       </div>
     </Router>
   );
