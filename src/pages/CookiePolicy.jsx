@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { LAST_UPDATED_DATE } from "../config/legal";
 
 function CookiePolicy() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ function CookiePolicy() {
           {t("cookie_policy_title")}
         </h1>
         <p className="text-sm text-[#7D8D86] mb-8">
-          {t("cookie_last_updated", { date: "12/06/2026" })}
+          {t("cookie_last_updated", { date: LAST_UPDATED_DATE })}
         </p>
 
         <section className="mb-6">
