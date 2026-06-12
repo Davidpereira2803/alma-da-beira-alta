@@ -102,6 +102,11 @@ function MyFooter() {
         {/* Bottom bar */}
         <div className="mt-10 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#BCA88D]">
           <div>© {new Date().getFullYear()} {t("title")} — Luxembourg. {t("rights_reserved")}</div>
+          <div className="flex items-center gap-4 flex-wrap justify-center">
+            <Link className="hover:text-[#F1F0E4] transition underline" to="/privacy-policy">{t("privacy_policy_title")}</Link>
+            <Link className="hover:text-[#F1F0E4] transition underline" to="/cookies">{t("cookie_policy_title")}</Link>
+            <Link className="hover:text-[#F1F0E4] transition underline" to="/terms">{t("terms_title")}</Link>
+          </div>
           <div>{t("developed_by", { name: "David Pereira de Magalhaes" })}</div>
         </div>
       </div>

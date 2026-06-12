@@ -157,6 +157,7 @@ function MyNavbar() {
     { code: "en", label: "EN" },
     { code: "pt", label: "PT" },
     { code: "fr", label: "FR" },
+    { code: "de", label: "DE" },
   ];
 
   const changeLanguage = (lng) => i18n.changeLanguage(lng);
